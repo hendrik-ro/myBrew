@@ -1,15 +1,19 @@
-export default function NavBar() {
+import type { PageProps } from "../types/pages";
+
+export default function NavBar(props: PageProps) {
+  const onNav = props.onNav;
+
   return (
     <nav>
       <ul>
         <li>
-          <a href="/">My Brew</a>
+          <button onClick={() => onNav("main")}>My Brew</button>
         </li>
         <li>
-          <a href="/about">About</a>
+          <button onClick={() => onNav("about")}>About</button>
         </li>
         <li>
-          <a href="/status">Status</a>
+          <button onClick={() => onNav("status")}>Status</button>
         </li>
       </ul>
     </nav>

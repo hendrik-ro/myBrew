@@ -1,4 +1,4 @@
-![CI tests](https://github.com/hendrik-ro/myBrew/actions/workflows/ci.yml/badge.svg)
+![CI](https://github.com/hendrik-ro/myBrew/actions/workflows/formatting.yml/badge.svg)
 
 myBrew 🍺
 ========
