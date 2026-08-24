@@ -7,13 +7,19 @@ export default function NavBar(props: PageProps) {
     <nav>
       <ul>
         <li>
-          <button onClick={() => onNav("main")}>My Brew</button>
+          <button className="navButton" onClick={() => onNav("main")}>
+            My Brew
+          </button>
         </li>
         <li>
-          <button onClick={() => onNav("about")}>About</button>
+          <button className="navButton" onClick={() => onNav("about")}>
+            About
+          </button>
         </li>
         <li>
-          <button onClick={() => onNav("status")}>Status</button>
+          <button className="navButton" onClick={() => onNav("status")}>
+            Status
+          </button>
         </li>
       </ul>
     </nav>

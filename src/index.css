@@ -104,6 +104,14 @@ a:hover {
   color: var(--icon);
   transition: 0.15s;
 }
-a:visited {
+
+.navButton {
   color: var(--text-h);
+  font-size: 1.2rem;
+  border: transparent;
+  background-color: transparent;
+}
+.navButton:hover {
+  color: var(--icon);
+  transition: 0.15s;
 }
