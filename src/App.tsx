@@ -1,27 +1,28 @@
+import { useState } from "react";
 import "./App.css";
+import Main from "./main/main";
+import About from "./about/about";
+import Footer from "./ui/footer";
 import NavBar from "./ui/navBar";
 
 function App() {
+  const [page, setPage] = useState("main");
+
+  const pages: string[] = ["main", "about"];
+
+  const handleNav = (page: string) => {
+    if (!pages.includes(page)) return;
+    setPage(page);
+  };
+
   return (
     <>
-      <NavBar />
-      <header>
-        <h1>My Brew</h1>
-        <p>Find your (new) favorite breweries</p>
-      </header>
-      <section>
-        <h2>Database</h2>
-        <p>
-          This webpage is powered by{" "}
-          <a
-            href="https://www.openbrewerydb.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Open Brewery DB
-          </a>
-        </p>
-      </section>
+      <div className="container">
+        <NavBar onNav={handleNav} />
+        {page === "main" && <Main />}
+        {page === "about" && <About />}
+        <Footer />
+      </div>
     </>
   );
 }
