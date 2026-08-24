@@ -1,6 +1,7 @@
 :root {
   --text: oklch(21% 0.034 264.665);
   --text-h: oklch(66.6% 0.179 58.318);
+  --icon: oklch(55.5% .163 48.998);
   --bg: oklch(98.7% 0.022 95.277);
 
   --font: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
@@ -45,6 +46,29 @@ body {
   margin: 0;
 }
 
+nav {
+    position: sticky;
+    top: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 0.2rem;
+    margin: 0.2rem;
+}
+
+nav ul a {
+    text-decoration: none;
+}
+
+nav ul a:hover {
+    color: var(--icon);
+    transition: .15s;
+}
+
 h1,
 h2 {
   font-family: var(--heading);
@@ -77,7 +101,8 @@ a {
   color: var(--text-h);
 }
 a:hover {
-  color: var(--text);
+  color: var(--icon);
+  transition: .15s;
 }
 a:visited {
   color: var(--text-h);
