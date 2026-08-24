@@ -1,8 +1,10 @@
 import "./App.css";
+import NavBar from "./ui/navBar";
 
 function App() {
   return (
     <>
+      <NavBar />
       <header>
         <h1>My Brew</h1>
         <p>Find your (new) favorite breweries</p>
