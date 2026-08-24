@@ -1,15 +1,14 @@
-import type { PageProps } from "../types/pages";
-import NavBar from "../ui/navBar";
-
-export default function Main(props: PageProps) {
+export default function Main() {
   return (
     <>
-      <NavBar onNav={props.onNav} />
-      <header>
+      <header style={{ margin: "2rem" }}>
         <h1>My Brew</h1>
         <p>Find your (new) favorite breweries</p>
       </header>
       <section>
+        <button id="brewButton">Search</button>
+      </section>
+      <section style={{ margin: "auto" }}>
         <h2>Database</h2>
         <p>
           This webpage is powered by{" "}

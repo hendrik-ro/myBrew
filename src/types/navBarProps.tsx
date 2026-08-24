@@ -1,3 +1,3 @@
-export type PageProps = {
+export type NavBarProps = {
   onNav: (page: string) => void;
 };

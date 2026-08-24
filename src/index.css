@@ -31,7 +31,7 @@
 }
 
 #root {
-  width: 1126px;
+  width: 1248px;
   max-width: 100%;
   margin: 0 auto;
   text-align: center;
@@ -73,7 +73,7 @@ h1,
 h2 {
   font-family: var(--heading);
   font-weight: 800;
-  color: var(--text);
+  color: var(--icon);
 }
 
 h1 {
@@ -97,12 +97,17 @@ h2 {
 p {
   margin: 0;
 }
+
 a {
   color: var(--text-h);
 }
 a:hover {
   color: var(--icon);
   transition: 0.15s;
+}
+
+.highlight {
+  color: var(--icon);
 }
 
 .navButton {
@@ -114,4 +119,14 @@ a:hover {
 .navButton:hover {
   color: var(--icon);
   transition: 0.15s;
+  cursor: pointer;
+}
+
+#brewButton {
+  color: var(--text);
+  background-color: var(--icon);
+  font-size: 1.5rem;
+  font-weight: 800;
+  border-radius: 0.2rem;
+  padding: 0.2rem 0.8rem;
 }

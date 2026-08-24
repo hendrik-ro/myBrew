@@ -1,6 +1,6 @@
-import type { PageProps } from "../types/pages";
+import type { NavBarProps } from "../types/navBarProps";
 
-export default function NavBar(props: PageProps) {
+export default function NavBar(props: NavBarProps) {
   const onNav = props.onNav;
 
   return (
@@ -14,11 +14,6 @@ export default function NavBar(props: PageProps) {
         <li>
           <button className="navButton" onClick={() => onNav("about")}>
             About
-          </button>
-        </li>
-        <li>
-          <button className="navButton" onClick={() => onNav("status")}>
-            Status
           </button>
         </li>
       </ul>
