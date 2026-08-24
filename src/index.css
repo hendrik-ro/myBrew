@@ -1,0 +1,84 @@
+:root {
+  --text: oklch(21% 0.034 264.665);
+  --text-h: oklch(66.6% 0.179 58.318);
+  --bg: oklch(98.7% 0.022 95.277);
+
+  --font: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+  --heading: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
+
+  font: 18px/145% var(--font);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: oklch(98.7% 0.022 95.277);
+    --text-h: oklch(66.6% 0.179 58.318);
+    --bg: oklch(21% 0.034 264.665);
+  }
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--text-h);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 800;
+  color: var(--text);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+a {
+  color: var(--text-h);
+}
+a:hover {
+  color: var(--text);
+}
+a:visited {
+  color: var(--text-h);
+}
