@@ -10,9 +10,7 @@ export default function Footer() {
         height: "1.1rem",
       }}
     >
-      <p>
-        © AGPL {date.getDate()}.{date.getMonth()}.{date.getFullYear()}
-      </p>
+      <p>© AGPL {date.getFullYear()} My Brew</p>
     </footer>
   );
 }

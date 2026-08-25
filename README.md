@@ -8,13 +8,13 @@ Find your new favourite brewery.
 A web application that allows you to search for breweries powered by [Open Brewery DB](https://openbrewerydb.org).
 
 ## Features
-- Search for a brewery by name
-- Search for breweries by country
-- Search for breweries by proximity
+* Landing page
+* Search for a brewery by name
 
 ## Roadmap
-* Landing page
-* Search function
+* Search for breweries by country
+* Search for breweries by name
+* Search for breweries by proximity
 
 ## Tech Stack
 - **Framework**: [vite.js](https://vitejs.dev/)

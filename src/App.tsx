@@ -3,7 +3,7 @@
 import { useState } from "react";
 import "./App.css";
 import Main from "./main/Main.tsx";
-import About from "./about/about";
+import About from "./about/About.tsx";
 import Footer from "./ui/footer";
 import NavBar from "./ui/navBar";
 import BrewRandom from "../api/random.ts";
