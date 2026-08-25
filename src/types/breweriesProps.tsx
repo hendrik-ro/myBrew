@@ -15,6 +15,6 @@ export type Brewery = {
 };
 
 export type BreweriesProps = {
-  ApiResults: Brewery[];
+  RandomResults: Brewery;
   Random: () => void;
 };

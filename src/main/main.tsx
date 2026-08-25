@@ -1,7 +1,7 @@
 import type { BreweriesProps } from "../types/breweriesProps";
 
 export default function Main(props: BreweriesProps) {
-  const { ApiResults, Random } = props;
+  const { RandomResults, Random } = props;
 
   const handleClick = () => {
     Random();
@@ -18,13 +18,26 @@ export default function Main(props: BreweriesProps) {
         <button id="brewButton" onClick={handleClick}>
           Random Brewery
         </button>
-        {ApiResults && ApiResults.length > 0 ? (
-          <div id="brewRandomResult">
-            <p>{ApiResults[0].name}</p>
-            <p>{ApiResults[0].address_1}</p>
-            <p>
-              {ApiResults[0].postal_code} {ApiResults[0].city}
-            </p>
+        {RandomResults ? (
+          <div id="brewRandomResult" style={{ marginTop: "1rem" }}>
+            <p>{RandomResults.name}</p>
+            <p>Type: {RandomResults.brewery_type}</p>
+            {RandomResults.address_1 && <p>{RandomResults.address_1}</p>}
+            {RandomResults.postal_code && (
+              <p>
+                {RandomResults.postal_code} {RandomResults.city}
+              </p>
+            )}
+            <p>{RandomResults.country}</p>
+            {RandomResults.website_url && (
+              <a
+                href={RandomResults.website_url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {RandomResults.website_url}
+              </a>
+            )}
           </div>
         ) : null}
       </section>

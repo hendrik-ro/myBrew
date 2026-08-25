@@ -18,7 +18,7 @@ function App() {
   };
 
   const handleRandom = () => {
-    const result = [BrewRandom()];
+    const result = BrewRandom();
     setBreweries(result);
   };
 
@@ -27,7 +27,7 @@ function App() {
       <div className="container">
         <NavBar onNav={handleNav} />
         {page === "main" && (
-          <Main ApiResults={breweries} Random={handleRandom} />
+          <Main RandomResults={breweries} Random={handleRandom} />
         )}
         {page === "about" && <About />}
         <Footer />
