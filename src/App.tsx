@@ -1,12 +1,12 @@
-// API calls: OFF
+// DEV
 
 import { useState } from "react";
 import "./App.css";
-import Main from "./main/main";
+import Main from "./main/Main.tsx";
 import About from "./about/about";
 import Footer from "./ui/footer";
 import NavBar from "./ui/navBar";
-// import BrewRandom from "../api/random.ts";
+import BrewRandom from "../api/random.ts";
 import type { Brewery } from "./types/brewery";
 import type { Ratelimiter } from "./types/ratelimiter.tsx";
 
@@ -14,13 +14,8 @@ const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
 
 function App() {
+  // Navigation
   const [page, setPage] = useState("main");
-  const [breweries, setBreweries] = useState<Brewery[] | null>(null);
-  const [ratelimit, setRatelimit] = useState<Ratelimiter>({
-    reqs: 0,
-    start: Date.now(),
-  });
-
   const pages: string[] = ["main", "about"];
 
   const handleNav = (page: string) => {
@@ -28,30 +23,16 @@ function App() {
     setPage(page);
   };
 
-  const handleRandom = async () => {
-    if (rateLimiter()) {
-      // const result = await BrewRandom();
-      //*
-      const result = {
-        name: "Test Brewery",
-        brewery_type: "micro",
-        address_1: "Some street 23",
-        city: "City of God",
-        country: "Beerhalla",
-        postal_code: "666",
-      } as Brewery;
-      //*/
-      setBreweries([result]);
-    } else {
-      alert(
-        `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
-      );
-    }
-  };
+  // Soft rate limiter
+  const [now, setNow] = useState(() => Date.now());
+  const [ratelimit, setRatelimit] = useState<Ratelimiter>({
+    reqs: 0,
+    start: now,
+  });
 
   const rateLimiter = (): boolean => {
-    const now = Date.now();
-    console.log(now);
+    if (ratelimit === null) return false;
+    setNow(() => Date.now());
     if (ratelimit.start + TIME_FRAME < now) {
       setRatelimit({
         reqs: 0,
@@ -69,17 +50,40 @@ function App() {
     return false;
   };
 
+  // APIs
+  const [breweries, setBreweries] = useState<Brewery[] | null>(null);
+
+  const handleRandom = async () => {
+    if (rateLimiter()) {
+      console.info("API: fetching random brewery");
+      const result = await BrewRandom();
+      /*
+      const result = {
+        name: "Test Brewery",
+        brewery_type: "micro",
+        address_1: "Some street 23",
+        city: "City of God",
+        country: "Beerhalla",
+        postal_code: "666",
+      } as Brewery;
+      */
+      setBreweries([result]);
+    } else {
+      alert(
+        `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
+      );
+    }
+  };
+
   return (
-    <>
-      <div className="container">
-        <NavBar onNav={handleNav} />
-        {page === "main" && (
-          <Main RandomResults={breweries} Random={handleRandom} />
-        )}
-        {page === "about" && <About />}
-        <Footer />
-      </div>
-    </>
+    <div className="container">
+      <NavBar onNav={handleNav} />
+      {page === "main" && (
+        <Main RandomResults={breweries} Random={handleRandom} />
+      )}
+      {page === "about" && <About />}
+      <Footer />
+    </div>
   );
 }
 
