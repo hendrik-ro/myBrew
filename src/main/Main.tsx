@@ -1,9 +1,10 @@
 import type { BreweriesProps } from "../types/props";
+import "./Main.css";
 
 export default function Main(props: BreweriesProps) {
   return (
-    <div className="container">
-      <header style={{ margin: "2rem" }}>
+    <div className="main-container">
+      <header>
         <h1>My Brew</h1>
         <p>Find your (new) favorite breweries</p>
         <img
@@ -13,7 +14,7 @@ export default function Main(props: BreweriesProps) {
         />
       </header>
       <Random RandomResults={props.RandomResults} Random={props.Random} />
-      <section style={{ margin: "auto" }}>
+      <section>
         <h2>Database</h2>
         <p>
           This webpage is powered by{" "}
@@ -44,7 +45,7 @@ function Random(props: BreweriesProps) {
         Random Brewery
       </button>
       {RandomResults && RandomResults.length > 0 ? (
-        <div className="brewRandomResult" style={{ marginTop: "1rem" }}>
+        <div className="brew-random" style={{ marginTop: "1rem" }}>
           <p>{RandomResults[0].name}</p>
           <p>Type: {RandomResults[0].brewery_type}</p>
           {RandomResults[0].address_1 && <p>{RandomResults[0].address_1}</p>}

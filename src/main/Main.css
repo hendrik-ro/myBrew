@@ -1,10 +1,27 @@
-.container {
+.main-container {
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  flex: 1;
+}
+
+header {
+  margin: 2rem;
+  flex: 1 2;
+}
+
+.random {
+  flex: 5 1;
+  width: 100%;
   align-items: center;
 }
 
-.brewRandomResult {
-  width: 50%;
+section {
+  width: 100%;
+  flex: 1 2;
+}
+
+.brew-random {
+  width: 100%;
   border: 1px solid white;
 }

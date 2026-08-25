@@ -37,6 +37,19 @@ export default function About() {
               Open Brewery DB
             </a>
           </span>
+          . To contribute to their database, see their FAQ.
+        </p>
+      </div>
+      <div className={styles.container}>
+        <p>
+          Created and mantained by{" "}
+          <a
+            href="https://github.com/hendrik-ro"
+            target="_blank"
+            rel="noopener norefferer"
+          >
+            Hendrik Röttgers
+          </a>
         </p>
       </div>
     </>
