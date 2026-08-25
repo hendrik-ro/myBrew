@@ -1,8 +1,8 @@
 :root {
-  --text: oklch(21% 0.034 264.665);
-  --text-h: oklch(66.6% 0.179 58.318);
-  --icon: oklch(55.5% 0.163 48.998);
-  --bg: oklch(98.7% 0.022 95.277);
+  --text: hsl(220, 42.857%, 10.98%);
+  --text-h: hsl(30.133, 100%, 44.118%);
+  --icon: hsl(24.706, 100%, 36.667%);
+  --bg: hsl(48, 100%, 96.078%);
 
   --font: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
   --heading: "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", sans-serif;
@@ -24,9 +24,9 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: oklch(98.7% 0.022 95.277);
-    --text-h: oklch(66.6% 0.179 58.318);
-    --bg: oklch(21% 0.034 264.665);
+    --text: hsl(48, 100%, 96.078%);
+    --text-h: hsl(30.133, 100%, 44.118%);
+    --bg: hsl(220, 42.857%, 10.98%);
   }
 }
 
@@ -40,6 +40,7 @@
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {

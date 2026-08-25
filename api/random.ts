@@ -1,4 +1,4 @@
-import type { Brewery } from "../src/types/breweriesProps";
+import type { Brewery } from "../src/types/brewery";
 
 export default async function BrewRandom(): Promise<Brewery | null> {
   // add to .env?
