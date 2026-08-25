@@ -13,8 +13,3 @@ export type Brewery = {
   state: string;
   street: string;
 };
-
-export type BreweriesProps = {
-  RandomResults: Brewery;
-  Random: () => void;
-};
