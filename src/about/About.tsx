@@ -1,12 +1,12 @@
-import styles from "./about.module.css";
+import "./About.css";
 
 export default function About() {
   return (
-    <>
+    <div className="about-container">
       <header style={{ margin: "2rem" }}>
         <h1>About</h1>
       </header>
-      <div className={styles.container}>
+      <div className="about">
         <p style={{ marginBottom: "3rem" }}>
           This page is an open-source project on an GNU Affero General Public
           License. Contributions are welcome on{" "}
@@ -40,7 +40,7 @@ export default function About() {
           . To contribute to their database, see their FAQ.
         </p>
       </div>
-      <div className={styles.container}>
+      <div className="creator">
         <p>
           Created and mantained by{" "}
           <a
@@ -52,6 +52,6 @@ export default function About() {
           </a>
         </p>
       </div>
-    </>
+    </div>
   );
 }

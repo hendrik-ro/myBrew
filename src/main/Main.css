@@ -11,7 +11,7 @@ header {
 }
 
 .random {
-  flex: 5 1;
+  flex: 10 1;
   width: 100%;
   align-items: center;
 }

@@ -15,7 +15,6 @@ export default function Main(props: BreweriesProps) {
       </header>
       <Random RandomResults={props.RandomResults} Random={props.Random} />
       <section>
-        <h2>Database</h2>
         <p>
           This webpage is powered by{" "}
           <a
