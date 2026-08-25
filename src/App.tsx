@@ -17,8 +17,8 @@ function App() {
     setPage(page);
   };
 
-  const handleRandom = () => {
-    const result = BrewRandom();
+  const handleRandom = async () => {
+    const result = await BrewRandom();
     setBreweries(result);
   };
 
