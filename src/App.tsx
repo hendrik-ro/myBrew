@@ -77,6 +77,31 @@ function App() {
   };
 
   const handleCountry = async () => {
+    if (rateLimiter()) {
+      const result = [
+        {
+          name: "Test Brewery",
+          brewery_type: "micro",
+          address_1: "Some street 23",
+          city: "City of God",
+          country: "Beerhalla",
+          postal_code: "666",
+        },
+        {
+          name: "Another Brewery",
+          brewery_type: "nano",
+          address_1: "Other street 42",
+          city: "City of Beer",
+          country: "Beerhalla",
+          postal_code: "333",
+        },
+      ] as Brewery[];
+      setBreweries(result);
+    } else {
+      alert(
+        `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
+      );
+    }
     console.log("not yet implemented");
   };
 
