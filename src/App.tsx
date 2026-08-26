@@ -9,6 +9,7 @@ import NavBar from "./ui/navBar";
 import BrewRandom from "../api/random.ts";
 import type { Brewery } from "./types/brewery";
 import type { Ratelimiter } from "./types/ratelimiter.tsx";
+import Browse from "./browse/Browse.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
@@ -16,7 +17,7 @@ const TIME_FRAME = 60_000;
 function App() {
   // Navigation
   const [page, setPage] = useState("main");
-  const pages: string[] = ["main", "about"];
+  const pages: string[] = ["main", "browse", "about"];
 
   const handleNav = (page: string) => {
     if (!pages.includes(page)) return;
@@ -75,11 +76,18 @@ function App() {
     }
   };
 
+  const handleCountry = async () => {
+    console.log("not yet implemented");
+  };
+
   return (
     <div className="container">
       <NavBar onNav={handleNav} />
       {page === "main" && (
         <Main RandomResults={breweries} Random={handleRandom} />
+      )}
+      {page === "browse" && (
+        <Browse Country={handleCountry} CountryResults={breweries} />
       )}
       {page === "about" && <About />}
       <Footer />

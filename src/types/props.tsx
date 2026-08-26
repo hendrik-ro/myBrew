@@ -1,8 +1,10 @@
 import type { Brewery } from "./brewery";
 
 export type BreweriesProps = {
-  RandomResults: Brewery[];
-  Random: () => void;
+  Country?: () => void;
+  CountryResults?: Brewery[];
+  Random?: () => void;
+  RandomResults?: Brewery[];
 };
 
 export type NavBarProps = {
