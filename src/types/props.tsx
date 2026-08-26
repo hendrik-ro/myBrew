@@ -1,9 +1,9 @@
 import type { Brewery } from "./brewery";
 
 export type BreweriesProps = {
-  Country?: () => void;
+  onCountry?: () => void;
   CountryResults?: Brewery[];
-  Random?: () => void;
+  onRandom?: () => void;
   RandomResults?: Brewery[];
 };
 

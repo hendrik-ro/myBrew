@@ -13,7 +13,7 @@ export default function Main(props: BreweriesProps) {
           src="../favicon/favicon.ico"
         />
       </header>
-      <Random RandomResults={props.RandomResults} Random={props.Random} />
+      <Random RandomResults={props.RandomResults} onRandom={props.onRandom} />
       <section>
         <p>
           This webpage is powered by{" "}
@@ -31,10 +31,10 @@ export default function Main(props: BreweriesProps) {
 }
 
 function Random(props: BreweriesProps) {
-  const { RandomResults, Random } = props;
+  const { RandomResults, onRandom } = props;
 
   const handleClick = () => {
-    Random();
+    onRandom();
   };
 
   return (
