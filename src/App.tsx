@@ -78,6 +78,10 @@ function App() {
 
   const handleCountry = async () => {
     if (rateLimiter()) {
+      console.info("API: fetching breweries by country");
+      /*
+      const result = await BrewCountry();
+      */
       const result = [
         {
           name: "Test Brewery",

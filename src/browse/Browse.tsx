@@ -26,32 +26,44 @@ function BrowseCountry(props: BreweriesProps) {
   TODO:
   * Add APIhandlers
   * Pagination
+  * Submit form loads <Main /> - add e.preventDefault()?
   * Map via api call:
       - datalist
       - tbody
   */
 
+  const handleSearch = () => {
+    onCountry();
+  };
+
   return (
     <div className="country">
-      <form id="country-search">
+      <h2>Country</h2>
+      <form id="country-search" onSubmit={handleSearch}>
         <input
           type="search"
           list="countries"
           id="country-choice"
           name="country-choice"
-          defaultValue={"Search for country..."}
+          placeholder={"Search for country..."}
         />
         <datalist id="countries">
+          <option value="Austria"></option>
+          <option value="Belgium"></option>
+          <option value="Germany"></option>
           <option value="Sweden"></option>
         </datalist>
+        <input type="submit" value="search"></input>
       </form>
       <table className="country-table">
         <thead>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Address</th>
-          <th>City</th>
-          <th>Website</th>
+          <tr>
+            <td>Name</td>
+            <td>Type</td>
+            <td>Address</td>
+            <td>City</td>
+            <td>Website</td>
+          </tr>
         </thead>
         <tbody>
           <tr>
