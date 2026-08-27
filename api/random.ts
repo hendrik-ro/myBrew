@@ -1,7 +1,7 @@
 import type { Brewery } from "../src/types/brewery";
 
 export default async function BrewRandom(): Promise<Brewery | null> {
-  // add to .env?
+  console.info("API: fetching random brewery");
   const url = "https://api.openbrewerydb.org/v1/breweries/random";
 
   try {
@@ -12,7 +12,7 @@ export default async function BrewRandom(): Promise<Brewery | null> {
       return brewery[0] as Brewery;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return null;
 }

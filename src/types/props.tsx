@@ -1,8 +1,11 @@
-import type { Brewery } from "./brewery";
+import type { Metadata } from "./meta";
+import type { BrewResults } from "./results";
 
 export type BreweriesProps = {
-  RandomResults: Brewery[];
-  Random: () => void;
+  meta?: Metadata;
+  results?: BrewResults;
+  onCountry?: (arg0: string, arg1?: number) => void;
+  onRandom?: () => void;
 };
 
 export type NavBarProps = {
