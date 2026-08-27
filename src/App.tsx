@@ -79,6 +79,9 @@ function App() {
 
   // APIs
   const [breweries, setBreweries] = useState<BrewResults | null>(null);
+  const [cache, setCache] = useState<
+    Record<string, Record<number, BrewResults>>
+  >({});
 
   const handleRandom = async () => {
     if (rateLimiter()) {
@@ -97,11 +100,22 @@ function App() {
     }
   };
 
-  const handleCountry = async (searchCountry: string) => {
+  const handleCountry = async (searchCountry: string, page: number = 1) => {
+    if (cache[searchCountry]?.[page]) {
+      setBreweries(cache[searchCountry][page]);
+      console.log("Cache hit!");
+      return;
+    }
     if (rateLimiter()) {
       console.info("API: fetching breweries for " + searchCountry);
       const result = await BrewCountry(searchCountry);
       setBreweries(result);
+      setCache((prev) => ({
+        ...prev,
+        [searchCountry]: {
+          [page]: result,
+        },
+      }));
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
