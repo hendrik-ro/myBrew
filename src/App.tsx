@@ -18,6 +18,7 @@ import type { BrewResults } from "./types/results.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
+const CACHE_TIMER = 900_000;
 
 const DEV_RESULTS = [
   {
@@ -92,6 +93,7 @@ function App() {
         pages: 1,
         current: 1,
         breweries: [DEV_RESULTS[Math.floor(Math.random() * 2)]],
+        timestamp: Date.now(),
       });
     } else {
       alert(
@@ -101,10 +103,13 @@ function App() {
   };
 
   const handleCountry = async (searchCountry: string, page: number = 1) => {
-    if (cache[searchCountry]?.[page]) {
-      setBreweries(cache[searchCountry][page]);
-      console.log("Cache hit!");
-      return;
+    const cached = cache[searchCountry]?.[page];
+    if (cached) {
+      if (Date.now() - cached.timestamp < CACHE_TIMER) {
+        setBreweries(cached);
+        console.info("Cache: loaded data");
+        return;
+      }
     }
     if (rateLimiter()) {
       console.info("API: fetching breweries for " + searchCountry);
@@ -121,7 +126,6 @@ function App() {
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
       );
     }
-    console.log("not yet implemented");
   };
 
   return (

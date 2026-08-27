@@ -3,9 +3,6 @@ import "./Browse.css";
 
 export default function Browse(props: BreweriesProps) {
   const { results, onCountry } = props;
-  if (results && onCountry) {
-    console.log("countries loaded");
-  }
   return (
     <div className="browse-container">
       <header>
@@ -18,9 +15,6 @@ export default function Browse(props: BreweriesProps) {
 
 function BrowseCountry(props: BreweriesProps) {
   const { results, onCountry } = props;
-  if (onCountry && results) {
-    console.log("countries loaded");
-  }
 
   /*
   TODO:

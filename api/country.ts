@@ -15,6 +15,7 @@ export default async function BrewCountry(
     pages: 0,
     current: page,
     breweries: null,
+    timestamp: Date.now(),
   };
 
   try {
