@@ -58,36 +58,56 @@ function BrowseCountry(props: BreweriesProps) {
         </datalist>
         <input type="submit" value="search"></input>
       </form>
-      <table className="country-table">
-        <thead>
-          <tr>
-            <td>Name</td>
-            <td>Type</td>
-            <td>Address</td>
-            <td>City</td>
-            <td>Website</td>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>Test</td>
-            <td>micro</td>
-            <td>Street</td>
-            <td>11111 City</td>
-            <td>link</td>
-          </tr>
-        </tbody>
-        <tfoot>
-          <tr>
-            <td>
-              <button>Prev</button>
-            </td>
-            <td>
-              <button>Next</button>
-            </td>
-          </tr>
-        </tfoot>
-      </table>
+      {CountryResults ? (
+        <table className="country-table">
+          <thead>
+            <tr>
+              <td>Name</td>
+              <td>Type</td>
+              <td>Address</td>
+              <td>City</td>
+              <td>Website</td>
+            </tr>
+          </thead>
+          <tbody>
+            {CountryResults.map((c) => {
+              return (
+                <tr key={c.id}>
+                  <td>{c.name}</td>
+                  <td>{c.brewery_type}</td>
+                  <td>{c.address_1}</td>
+                  <td>
+                    {c.postal_code} {c.city}
+                  </td>
+                  <td>
+                    {c.website_url ? (
+                      <a
+                        href={c.website_url}
+                        target="_blank"
+                        rel="noopener norefferer"
+                      >
+                        {c.website_url}
+                      </a>
+                    ) : (
+                      "-"
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+          <tfoot>
+            <tr>
+              <td>
+                <button>Prev</button>
+              </td>
+              <td>
+                <button>Next</button>
+              </td>
+            </tr>
+          </tfoot>
+        </table>
+      ) : null}
     </div>
   );
 }
