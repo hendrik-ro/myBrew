@@ -2,8 +2,8 @@ import type { BreweriesProps } from "../types/props";
 import "./Browse.css";
 
 export default function Browse(props: BreweriesProps) {
-  const { CountryResults, onCountry } = props;
-  if (CountryResults && onCountry) {
+  const { results, onCountry } = props;
+  if (results && onCountry) {
     console.log("countries loaded");
   }
   return (
@@ -11,14 +11,14 @@ export default function Browse(props: BreweriesProps) {
       <header>
         <h1>Breweries</h1>
       </header>
-      <BrowseCountry onCountry={onCountry} CountryResults={CountryResults} />
+      <BrowseCountry onCountry={onCountry} results={results} />
     </div>
   );
 }
 
 function BrowseCountry(props: BreweriesProps) {
-  const { CountryResults, onCountry } = props;
-  if (onCountry && CountryResults) {
+  const { results, onCountry } = props;
+  if (onCountry && results) {
     console.log("countries loaded");
   }
 
@@ -56,7 +56,7 @@ function BrowseCountry(props: BreweriesProps) {
         </datalist>
         <input type="submit" value="search"></input>
       </form>
-      {CountryResults ? (
+      {results ? (
         <table className="country-table">
           <thead>
             <tr>
@@ -68,7 +68,7 @@ function BrowseCountry(props: BreweriesProps) {
             </tr>
           </thead>
           <tbody>
-            {CountryResults.map((c) => {
+            {results.breweries.map((c) => {
               return (
                 <tr key={c.id}>
                   <td>{c.name}</td>

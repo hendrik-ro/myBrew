@@ -13,7 +13,7 @@ export default function Main(props: BreweriesProps) {
           src="../favicon/favicon.ico"
         />
       </header>
-      <Random RandomResults={props.RandomResults} onRandom={props.onRandom} />
+      <Random results={props.results} onRandom={props.onRandom} />
       <section>
         <p>
           This webpage is powered by{" "}
@@ -31,7 +31,7 @@ export default function Main(props: BreweriesProps) {
 }
 
 function Random(props: BreweriesProps) {
-  const { RandomResults, onRandom } = props;
+  const { results, onRandom } = props;
 
   const handleClick = () => {
     onRandom();
@@ -43,24 +43,26 @@ function Random(props: BreweriesProps) {
       <button id="brewButton" onClick={handleClick}>
         Random Brewery
       </button>
-      {RandomResults && RandomResults.length > 0 ? (
+      {results && results.breweries.length > 0 ? (
         <div className="brew-random" style={{ marginTop: "1rem" }}>
-          <p>{RandomResults[0].name}</p>
-          <p>Type: {RandomResults[0].brewery_type}</p>
-          {RandomResults[0].address_1 && <p>{RandomResults[0].address_1}</p>}
-          {RandomResults[0].postal_code && (
+          <p>{results.breweries[0].name}</p>
+          <p>Type: {results.breweries[0].brewery_type}</p>
+          {results.breweries[0].address_1 && (
+            <p>{results.breweries[0].address_1}</p>
+          )}
+          {results.breweries[0].postal_code && (
             <p>
-              {RandomResults[0].postal_code} {RandomResults[0].city}
+              {results.breweries[0].postal_code} {results.breweries[0].city}
             </p>
           )}
-          <p>{RandomResults[0].country}</p>
-          {RandomResults[0].website_url && (
+          <p>{results.breweries[0].country}</p>
+          {results.breweries[0].website_url && (
             <a
-              href={RandomResults[0].website_url}
+              href={results.breweries[0].website_url}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {RandomResults[0].website_url}
+              {results.breweries[0].website_url}
             </a>
           )}
         </div>

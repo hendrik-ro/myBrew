@@ -14,6 +14,7 @@ import BrewCountry from "../api/country.ts";
 import type { Brewery } from "./types/brewery";
 import type { Ratelimiter } from "./types/ratelimiter.tsx";
 import Browse from "./browse/Browse.tsx";
+import type { BrewResults } from "./types/results.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
@@ -77,14 +78,18 @@ function App() {
   };
 
   // APIs
-  const [breweries, setBreweries] = useState<Brewery[] | null>(null);
+  const [breweries, setBreweries] = useState<BrewResults | null>(null);
 
   const handleRandom = async () => {
     if (rateLimiter()) {
       console.info("API: fetching random brewery");
       // const result = await BrewRandom();
       // setBreweries([result])
-      setBreweries([DEV_RESULTS[Math.floor(Math.random() * 2)]]);
+      setBreweries({
+        pages: 1,
+        current: 1,
+        breweries: [DEV_RESULTS[Math.floor(Math.random() * 2)]],
+      });
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
@@ -110,10 +115,10 @@ function App() {
       <NavBar onNav={handleNav} />
       <div className="container">
         {page === "main" && (
-          <Main onRandom={handleRandom} RandomResults={breweries} />
+          <Main onRandom={handleRandom} results={breweries} />
         )}
         {page === "browse" && (
-          <Browse onCountry={handleCountry} CountryResults={breweries} />
+          <Browse onCountry={handleCountry} results={breweries} />
         )}
         {page === "about" && <About />}
       </div>
