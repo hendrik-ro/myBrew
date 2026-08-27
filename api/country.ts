@@ -1,5 +1,6 @@
 import type { Brewery } from "../src/types/brewery";
-import type { BrewResults, MetaResults } from "../src/types/results";
+import type { CountryMeta } from "../src/types/meta";
+import type { BrewResults } from "../src/types/results";
 
 export default async function BrewCountry(
   country: string,
@@ -26,7 +27,7 @@ export default async function BrewCountry(
       metaURL + country.toLowerCase().trim() + perPageQuery,
     );
     if (response.ok) {
-      const meta = (await response.json()) as MetaResults;
+      const meta = (await response.json()) as CountryMeta;
       results.pages = Math.ceil(meta.total / meta.per_page);
     }
   } catch (error) {

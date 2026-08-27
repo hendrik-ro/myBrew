@@ -2,19 +2,19 @@ import type { BreweriesProps } from "../types/props";
 import "./Browse.css";
 
 export default function Browse(props: BreweriesProps) {
-  const { results, onCountry } = props;
+  const { results, onCountry, meta } = props;
   return (
     <div className="browse-container">
       <header>
         <h1>Breweries</h1>
       </header>
-      <BrowseCountry onCountry={onCountry} results={results} />
+      <BrowseCountry onCountry={onCountry} results={results} meta={meta} />
     </div>
   );
 }
 
 function BrowseCountry(props: BreweriesProps) {
-  const { results, onCountry } = props;
+  const { results, onCountry, meta } = props;
 
   /*
   TODO:
@@ -38,23 +38,25 @@ function BrowseCountry(props: BreweriesProps) {
   return (
     <div className="country">
       <h2>Country</h2>
-      <form id="country-search" onSubmit={handleSearch}>
-        <input
-          type="search"
-          list="countries"
-          id="country-choice"
-          name="country-choice"
-          placeholder={"Search for country..."}
-        />
-        <datalist id="countries">
-          <option value="Austria"></option>
-          <option value="Belgium"></option>
-          <option value="France"></option>
-          <option value="Germany"></option>
-          <option value="Sweden"></option>
-        </datalist>
-        <input type="submit" value="search"></input>
-      </form>
+      {meta ? (
+        <form id="country-search" onSubmit={handleSearch}>
+          <input
+            type="search"
+            list="countries"
+            id="country-choice"
+            name="country-choice"
+            placeholder={"Search for country..."}
+          />
+          <datalist id="countries">
+            {Object.keys(meta.by_country).map((country) => (
+              <option key={country} value={country}></option>
+            ))}
+          </datalist>
+          <input type="submit" value="search"></input>
+        </form>
+      ) : (
+        <p>Error: API failed to fetch meta data</p>
+      )}
       {results ? (
         <table className="country-table">
           <thead>

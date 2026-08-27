@@ -7,9 +7,3 @@ export type BrewResults = {
   timestamp: number;
   country?: string;
 };
-
-export type MetaResults = {
-  total: number;
-  page: number;
-  per_page: number;
-};

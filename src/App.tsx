@@ -3,18 +3,20 @@ DEV
   API calls might be deactivated!
 */
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Main from "./main/Main.tsx";
 import About from "./about/About.tsx";
 import Footer from "./ui/footer";
 import NavBar from "./ui/navBar";
+import Browse from "./browse/Browse.tsx";
+import BrewMeta from "../api/metadata.ts";
 // import BrewRandom from "../api/random.ts";
 import BrewCountry from "../api/country.ts";
 import type { Brewery } from "./types/brewery";
 import type { Ratelimiter } from "./types/ratelimiter.tsx";
-import Browse from "./browse/Browse.tsx";
 import type { BrewResults } from "./types/results.tsx";
+import type { Metadata } from "./types/meta.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
@@ -79,10 +81,19 @@ function App() {
   };
 
   // APIs
+  const [meta, setMeta] = useState<Metadata | null>(null);
   const [breweries, setBreweries] = useState<BrewResults | null>(null);
   const [cache, setCache] = useState<
     Record<string, Record<number, BrewResults>> // searchString -> page -> breweries
   >({});
+
+  useEffect(() => {
+    const fetchMetaData = async () => {
+      const metadata = (await BrewMeta()) as Metadata;
+      setMeta(metadata);
+    };
+    fetchMetaData();
+  }, []);
 
   const handleRandom = async () => {
     if (rateLimiter()) {
@@ -135,7 +146,7 @@ function App() {
           <Main onRandom={handleRandom} results={breweries} />
         )}
         {page === "browse" && (
-          <Browse onCountry={handleCountry} results={breweries} />
+          <Browse onCountry={handleCountry} results={breweries} meta={meta} />
         )}
         {page === "about" && <About />}
       </div>
