@@ -7,6 +7,7 @@ import About from "./about/About.tsx";
 import Footer from "./ui/footer";
 import NavBar from "./ui/navBar";
 import BrewRandom from "../api/random.ts";
+import BrewCountry from "../api/country.ts";
 import type { Brewery } from "./types/brewery";
 import type { Ratelimiter } from "./types/ratelimiter.tsx";
 import Browse from "./browse/Browse.tsx";
@@ -79,9 +80,8 @@ function App() {
   const handleCountry = async (searchCountry: string) => {
     if (rateLimiter()) {
       console.info("API: fetching breweries for " + searchCountry);
-      /*
       const result = await BrewCountry(searchCountry);
-      */
+      /*
       const result = [
         {
           name: "Test Brewery",
@@ -101,6 +101,7 @@ function App() {
           postal_code: "333",
         },
       ] as Brewery[];
+      */
       setBreweries(result);
     } else {
       alert(

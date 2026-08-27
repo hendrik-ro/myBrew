@@ -12,7 +12,7 @@ export default async function BrewRandom(): Promise<Brewery | null> {
       return brewery[0] as Brewery;
     }
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
   return null;
 }

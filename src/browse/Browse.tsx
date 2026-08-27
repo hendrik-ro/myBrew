@@ -24,11 +24,9 @@ function BrowseCountry(props: BreweriesProps) {
 
   /*
   TODO:
-  * Add APIhandlers
   * Pagination
   * Map via api call:
       - datalist
-      - tbody
   */
 
   const handleSearch = (e: React.SubmitEvent<HTMLFormElement>) => {
