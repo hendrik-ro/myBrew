@@ -114,13 +114,15 @@ function App() {
   return (
     <div className="container">
       <NavBar onNav={handleNav} />
-      {page === "main" && (
-        <Main onRandom={handleRandom} RandomResults={breweries} />
-      )}
-      {page === "browse" && (
-        <Browse onCountry={handleCountry} CountryResults={breweries} />
-      )}
-      {page === "about" && <About />}
+      <div className="container">
+        {page === "main" && (
+          <Main onRandom={handleRandom} RandomResults={breweries} />
+        )}
+        {page === "browse" && (
+          <Browse onCountry={handleCountry} CountryResults={breweries} />
+        )}
+        {page === "about" && <About />}
+      </div>
       <Footer />
     </div>
   );

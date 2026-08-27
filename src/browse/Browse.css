@@ -23,7 +23,7 @@
 }
 
 .country-table {
-  width: 80%;
+  max-width: 1024px;
   border: 1px solid hsl(24.706, 100%, 36.667%);
   border-radius: 0.5rem;
   padding: 0.5rem;
