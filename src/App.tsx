@@ -1,4 +1,7 @@
-// DEV
+/*
+DEV
+  API calls might be deactivated!
+*/
 
 import { useState } from "react";
 import "./App.css";
@@ -6,7 +9,7 @@ import Main from "./main/Main.tsx";
 import About from "./about/About.tsx";
 import Footer from "./ui/footer";
 import NavBar from "./ui/navBar";
-import BrewRandom from "../api/random.ts";
+// import BrewRandom from "../api/random.ts";
 import BrewCountry from "../api/country.ts";
 import type { Brewery } from "./types/brewery";
 import type { Ratelimiter } from "./types/ratelimiter.tsx";
@@ -14,6 +17,26 @@ import Browse from "./browse/Browse.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
+
+const DEV_RESULTS = [
+  {
+    name: "Test Brewery",
+    brewery_type: "micro",
+    address_1: "Some street 23",
+    city: "City of God",
+    country: "Beerhalla",
+    postal_code: "666",
+    website_url: "none",
+  },
+  {
+    name: "Another Brewery",
+    brewery_type: "nano",
+    address_1: "Other street 42",
+    city: "City of Beer",
+    country: "Beerhalla",
+    postal_code: "333",
+  },
+] as Brewery[];
 
 function App() {
   // Navigation
@@ -23,6 +46,7 @@ function App() {
   const handleNav = (page: string) => {
     if (!pages.includes(page)) return;
     setPage(page);
+    setBreweries(null); // Reset breweries
   };
 
   // Soft rate limiter
@@ -58,18 +82,9 @@ function App() {
   const handleRandom = async () => {
     if (rateLimiter()) {
       console.info("API: fetching random brewery");
-      const result = await BrewRandom();
-      /*
-      const result = {
-        name: "Test Brewery",
-        brewery_type: "micro",
-        address_1: "Some street 23",
-        city: "City of God",
-        country: "Beerhalla",
-        postal_code: "666",
-      } as Brewery;
-      */
-      setBreweries([result]);
+      // const result = await BrewRandom();
+      // setBreweries([result])
+      setBreweries([DEV_RESULTS[Math.floor(Math.random() * 2)]]);
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
@@ -81,27 +96,6 @@ function App() {
     if (rateLimiter()) {
       console.info("API: fetching breweries for " + searchCountry);
       const result = await BrewCountry(searchCountry);
-      /*
-      const result = [
-        {
-          name: "Test Brewery",
-          brewery_type: "micro",
-          address_1: "Some street 23",
-          city: "City of God",
-          country: "Beerhalla",
-          postal_code: "666",
-          website_url: "none",
-        },
-        {
-          name: "Another Brewery",
-          brewery_type: "nano",
-          address_1: "Other street 42",
-          city: "City of Beer",
-          country: "Beerhalla",
-          postal_code: "333",
-        },
-      ] as Brewery[];
-      */
       setBreweries(result);
     } else {
       alert(
