@@ -76,11 +76,11 @@ function App() {
     }
   };
 
-  const handleCountry = async () => {
+  const handleCountry = async (searchCountry: string) => {
     if (rateLimiter()) {
-      console.info("API: fetching breweries by country");
+      console.info("API: fetching breweries for " + searchCountry);
       /*
-      const result = await BrewCountry();
+      const result = await BrewCountry(searchCountry);
       */
       const result = [
         {

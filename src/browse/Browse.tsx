@@ -11,7 +11,7 @@ export default function Browse(props: BreweriesProps) {
       <header>
         <h1>Breweries</h1>
       </header>
-      <BrowseCountry />
+      <BrowseCountry onCountry={onCountry} CountryResults={CountryResults} />
     </div>
   );
 }
@@ -19,21 +19,24 @@ export default function Browse(props: BreweriesProps) {
 function BrowseCountry(props: BreweriesProps) {
   const { CountryResults, onCountry } = props;
   if (onCountry && CountryResults) {
-    console.log("countries loeaded");
+    console.log("countries loaded");
   }
 
   /*
   TODO:
   * Add APIhandlers
   * Pagination
-  * Submit form loads <Main /> - add e.preventDefault()?
   * Map via api call:
       - datalist
       - tbody
   */
 
-  const handleSearch = () => {
-    onCountry();
+  const handleSearch = (e: React.SubmitEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const input = (
+      e.currentTarget.elements.namedItem("country-choice") as HTMLInputElement
+    ).value;
+    if (input.trim() !== "") onCountry(input);
   };
 
   return (
