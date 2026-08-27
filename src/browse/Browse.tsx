@@ -31,6 +31,10 @@ function BrowseCountry(props: BreweriesProps) {
     if (input.trim() !== "") onCountry(input);
   };
 
+  const handleClick = (search: string, page: number) => {
+    onCountry(search, page);
+  };
+
   return (
     <div className="country">
       <h2>Country</h2>
@@ -45,6 +49,7 @@ function BrowseCountry(props: BreweriesProps) {
         <datalist id="countries">
           <option value="Austria"></option>
           <option value="Belgium"></option>
+          <option value="France"></option>
           <option value="Germany"></option>
           <option value="Sweden"></option>
         </datalist>
@@ -78,7 +83,7 @@ function BrowseCountry(props: BreweriesProps) {
                         target="_blank"
                         rel="noopener norefferer"
                       >
-                        {c.website_url}
+                        Link
                       </a>
                     ) : (
                       "-"
@@ -88,16 +93,32 @@ function BrowseCountry(props: BreweriesProps) {
               );
             })}
           </tbody>
-          <tfoot>
-            <tr>
-              <td>
-                <button>Prev</button>
-              </td>
-              <td>
-                <button>Next</button>
-              </td>
-            </tr>
-          </tfoot>
+          {results.pages > 1 ? (
+            <tfoot>
+              <tr>
+                <td colSpan={6}>
+                  {results.current > 1 ? (
+                    <button
+                      onClick={() =>
+                        handleClick(results.country, results.current - 1)
+                      }
+                    >
+                      Prev
+                    </button>
+                  ) : null}
+                  {results.pages > results.current ? (
+                    <button
+                      onClick={() =>
+                        handleClick(results.country, results.current + 1)
+                      }
+                    >
+                      Next
+                    </button>
+                  ) : null}
+                </td>
+              </tr>
+            </tfoot>
+          ) : null}
         </table>
       ) : null}
     </div>

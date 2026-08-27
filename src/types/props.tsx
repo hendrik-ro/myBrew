@@ -1,7 +1,7 @@
 import type { BrewResults } from "./results";
 
 export type BreweriesProps = {
-  onCountry?: (arg: string) => void;
+  onCountry?: (arg0: string, arg1?: number) => void;
   results?: BrewResults;
   onRandom?: () => void;
 };

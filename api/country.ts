@@ -6,6 +6,8 @@ export default async function BrewCountry(
   page: number = 1,
   perPage: number = 12,
 ): Promise<BrewResults | null> {
+  console.info(`API: fetching breweries for ${country} - page ${page}`);
+
   const metaURL = "https://api.openbrewerydb.org/v1/breweries/meta?by_country=";
   const url = "https://api.openbrewerydb.org/v1/breweries?by_country=";
   const perPageQuery = "&per_page=" + perPage;
@@ -16,6 +18,7 @@ export default async function BrewCountry(
     current: page,
     breweries: null,
     timestamp: Date.now(),
+    country: country,
   };
 
   try {

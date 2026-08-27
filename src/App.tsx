@@ -81,12 +81,11 @@ function App() {
   // APIs
   const [breweries, setBreweries] = useState<BrewResults | null>(null);
   const [cache, setCache] = useState<
-    Record<string, Record<number, BrewResults>>
+    Record<string, Record<number, BrewResults>> // searchString -> page -> breweries
   >({});
 
   const handleRandom = async () => {
     if (rateLimiter()) {
-      console.info("API: fetching random brewery");
       // const result = await BrewRandom();
       // setBreweries([result])
       setBreweries({
@@ -112,12 +111,12 @@ function App() {
       }
     }
     if (rateLimiter()) {
-      console.info("API: fetching breweries for " + searchCountry);
-      const result = await BrewCountry(searchCountry);
+      const result = await BrewCountry(searchCountry, page);
       setBreweries(result);
       setCache((prev) => ({
         ...prev,
         [searchCountry]: {
+          ...prev[searchCountry],
           [page]: result,
         },
       }));

@@ -5,6 +5,7 @@ export type BrewResults = {
   current: number;
   breweries: Brewery[];
   timestamp: number;
+  country?: string;
 };
 
 export type MetaResults = {
