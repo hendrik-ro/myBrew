@@ -60,7 +60,7 @@ function BrowseCountry(props: BreweriesProps) {
       ) : (
         <p>Error: API failed to fetch meta data</p>
       )}
-      {results ? (
+      {results && !loading ? (
         <table className="country-table">
           <thead>
             <tr>
@@ -126,7 +126,7 @@ function BrowseCountry(props: BreweriesProps) {
           ) : null}
         </table>
       ) : loading ? (
-        <p>Loading...</p>
+        <p>Loading breweries...</p>
       ) : null}
     </div>
   );
