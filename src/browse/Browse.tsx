@@ -2,25 +2,28 @@ import type { BreweriesProps } from "../types/props";
 import "./Browse.css";
 
 export default function Browse(props: BreweriesProps) {
-  const { results, onCountry, meta } = props;
+  const { results, onCountry, meta, loading } = props;
   return (
     <div className="browse-container">
       <header>
         <h1>Breweries</h1>
       </header>
-      <BrowseCountry onCountry={onCountry} results={results} meta={meta} />
+      <BrowseCountry
+        onCountry={onCountry}
+        results={results}
+        meta={meta}
+        loading={loading}
+      />
     </div>
   );
 }
 
 function BrowseCountry(props: BreweriesProps) {
-  const { results, onCountry, meta } = props;
+  const { results, onCountry, meta, loading } = props;
 
   /*
   TODO:
   * Pagination
-  * Map via api call:
-      - datalist
   */
 
   const handleSearch = (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -122,6 +125,8 @@ function BrowseCountry(props: BreweriesProps) {
             </tfoot>
           ) : null}
         </table>
+      ) : loading ? (
+        <p>Loading...</p>
       ) : null}
     </div>
   );
