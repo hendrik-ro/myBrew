@@ -102,24 +102,35 @@ function BrowseCountry(props: BreweriesProps) {
             <tfoot>
               <tr>
                 <td colSpan={6}>
-                  {results.current > 1 ? (
-                    <button
-                      onClick={() =>
-                        handleClick(results.country, results.current - 1)
-                      }
-                    >
-                      Prev
-                    </button>
-                  ) : null}
-                  {results.pages > results.current ? (
-                    <button
-                      onClick={() =>
-                        handleClick(results.country, results.current + 1)
-                      }
-                    >
-                      Next
-                    </button>
-                  ) : null}
+                  <span
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                    }}
+                  >
+                    {results.current > 1 ? (
+                      <button
+                        onClick={() =>
+                          handleClick(results.country, results.current - 1)
+                        }
+                      >
+                        Prev
+                      </button>
+                    ) : null}
+                    {results.current > 1 && results.current < results.pages ? (
+                      <p>1, 2, 3, 4</p>
+                    ) : null}
+                    {results.pages > results.current ? (
+                      <button
+                        onClick={() =>
+                          handleClick(results.country, results.current + 1)
+                        }
+                      >
+                        Next
+                      </button>
+                    ) : null}
+                  </span>
                 </td>
               </tr>
             </tfoot>
