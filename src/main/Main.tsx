@@ -1,7 +1,9 @@
-import type { BreweriesProps } from "../types/props";
+import type { MainProps } from "../types/props";
 import "./Main.css";
 
-export default function Main(props: BreweriesProps) {
+export default function Main(props: MainProps) {
+  const { results, onRandom } = props;
+
   return (
     <div className="main-container">
       <header>
@@ -13,7 +15,7 @@ export default function Main(props: BreweriesProps) {
           src="../favicon/favicon.ico"
         />
       </header>
-      <Random results={props.results} onRandom={props.onRandom} />
+      <Random results={results} onRandom={onRandom} />
       <section>
         <p>
           This webpage is powered by{" "}
@@ -30,11 +32,14 @@ export default function Main(props: BreweriesProps) {
   );
 }
 
-function Random(props: BreweriesProps) {
+function Random(props: MainProps) {
   const { results, onRandom } = props;
 
   const handleClick = () => {
-    onRandom();
+    if (onRandom) {
+      onRandom();
+    }
+    console.error(new Error("Failed to fetch property 'onRandom'"));
   };
 
   return (

@@ -1,8 +1,9 @@
-import type { BreweriesProps } from "../types/props";
+import type { BrewFormProps, BrowseProps } from "../types/props";
 import "./Browse.css";
 
-export default function Browse(props: BreweriesProps) {
+export default function Browse(props: BrowseProps) {
   const { results, onCountry, meta, loading } = props;
+
   return (
     <div className="browse-container">
       <header>
@@ -18,13 +19,8 @@ export default function Browse(props: BreweriesProps) {
   );
 }
 
-function BrowseCountry(props: BreweriesProps) {
+function BrowseCountry(props: BrowseProps) {
   const { results, onCountry, meta, loading } = props;
-
-  /*
-  TODO:
-  * Pagination
-  */
 
   const handleSearch = (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -42,8 +38,13 @@ function BrowseCountry(props: BreweriesProps) {
       ) : (
         <p>Error: API failed to fetch meta data</p>
       )}
-      {results && !loading ? (
-        <BrewTable results={results} onCountry={onCountry} />
+      {results.breweries.length > 0 && !loading ? (
+        <BrewTable
+          onCountry={onCountry}
+          results={results}
+          meta={meta}
+          loading={loading}
+        />
       ) : (
         loading && <p>Loading breweries...</p>
       )}
@@ -51,8 +52,9 @@ function BrowseCountry(props: BreweriesProps) {
   );
 }
 
-function BrewForm(props: BreweriesProps) {
+function BrewForm(props: BrewFormProps) {
   const { meta, onSearch } = props;
+
   return (
     <form id="country-search" onSubmit={onSearch}>
       <input
@@ -72,8 +74,8 @@ function BrewForm(props: BreweriesProps) {
   );
 }
 
-function BrewTable(props: BreweriesProps) {
-  const { results, onCountry } = props;
+function BrewTable(props: BrowseProps) {
+  const { results, onCountry, meta, loading } = props;
 
   return (
     <table className="country-table">
@@ -117,7 +119,12 @@ function BrewTable(props: BreweriesProps) {
         <tfoot>
           <tr>
             <td colSpan={6}>
-              <Pagination onCountry={onCountry} results={results} />
+              <Pagination
+                onCountry={onCountry}
+                results={results}
+                meta={meta}
+                loading={loading}
+              />
             </td>
           </tr>
         </tfoot>
@@ -126,8 +133,9 @@ function BrewTable(props: BreweriesProps) {
   );
 }
 
-function Pagination(props: BreweriesProps) {
+function Pagination(props: BrowseProps) {
   const { onCountry, results } = props;
+
   const pages: Record<number, boolean> = {};
   for (let i = 1; i <= results.pages; i++) {
     pages[i] = i === results.current;

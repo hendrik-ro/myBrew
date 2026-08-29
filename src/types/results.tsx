@@ -7,7 +7,7 @@ import type { Brewery } from "./brewery";
 export type BrewResults = {
   pages: number;
   current: number;
-  breweries: Brewery[];
+  breweries: Brewery[] | null;
   timestamp: number;
   country?: string;
 };
