@@ -41,3 +41,9 @@
 #country-search {
   margin: 0.5rem;
 }
+
+.pagination {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
