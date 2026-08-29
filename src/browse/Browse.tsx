@@ -145,6 +145,49 @@ function Pagination(props: BrowseProps) {
     onCountry(search, page);
   };
 
+  const renderPageButton = (pageNum: number) => {
+    const isCurrent = pageNum === results.current;
+    return (
+      <button
+        className="num-button"
+        key={pageNum}
+        disabled={isCurrent}
+        onClick={() => handleClick(results.country, pageNum)}
+        style={{
+          fontWeight: isCurrent ? "bold" : "normal",
+          margin: "0 0.2rem",
+        }}
+      >
+        {pageNum}
+      </button>
+    );
+  };
+
+  const renderEllipsis = (key: string) => (
+    <span key={key} style={{ margin: "0 0.2rem" }}>
+      ...
+    </span>
+  );
+
+  const getVisiblePages = () => {
+    const visiblePages: number[] = [];
+    const { current, pages } = results;
+
+    for (let i = 1; i <= pages; i++) {
+      if (i === 1 || i === pages || Math.abs(i - current) <= 3) {
+        const lastItem = visiblePages[visiblePages.length - 1];
+        if (visiblePages.length > 0 && lastItem !== -1 && i - lastItem > 1) {
+          visiblePages.push(-1);
+        }
+        visiblePages.push(i);
+      }
+    }
+
+    return visiblePages;
+  };
+
+  const visiblePages = getVisiblePages();
+
   return (
     <span className="pagination">
       <button
@@ -155,20 +198,11 @@ function Pagination(props: BrowseProps) {
         Prev
       </button>
 
-      {Object.entries(pages).map(([pagenNum, isCurrent]) => (
-        <button
-          className="num-button"
-          key={pagenNum}
-          disabled={isCurrent}
-          onClick={() => handleClick(results.country, Number(pagenNum))}
-          style={{
-            fontWeight: isCurrent ? "bold" : "normal",
-            margin: "0 0.2rem",
-          }}
-        >
-          {pagenNum}
-        </button>
-      ))}
+      {visiblePages.map((item, index) =>
+        item === -1
+          ? renderEllipsis(`ellipsis-${index}`)
+          : renderPageButton(item),
+      )}
 
       <button
         disabled={results.current === results.pages}
