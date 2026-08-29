@@ -34,6 +34,10 @@
   color: hsl(30.133, 100%, 44.118%);
 }
 
+.country-table td {
+  padding: 0.2rem;
+}
+
 .country-table tfoot td button {
   color: hsl(30.133, 100%, 44.118%);
 }

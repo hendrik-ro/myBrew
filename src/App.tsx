@@ -20,7 +20,7 @@ import type { Metadata } from "./types/meta.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
-const CACHE_TIMER = 900_000;
+const CACHE_TIMER = 900_000_000;
 
 const DEV_RESULTS = [
   {

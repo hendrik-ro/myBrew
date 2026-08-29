@@ -128,6 +128,10 @@ function BrewTable(props: BreweriesProps) {
 
 function Pagination(props: BreweriesProps) {
   const { onCountry, results } = props;
+  const pages: Record<number, boolean> = {};
+  for (let i = 1; i <= results.pages; i++) {
+    pages[i] = i === results.current;
+  }
 
   const handleClick = (search: string, page: number) => {
     onCountry(search, page);
@@ -135,23 +139,36 @@ function Pagination(props: BreweriesProps) {
 
   return (
     <span className="pagination">
-      {results.current > 1 ? (
+      <button
+        disabled={results.current <= 1}
+        onClick={() => handleClick(results.country, results.current - 1)}
+        style={{ margin: "0 0.2rem" }}
+      >
+        Prev
+      </button>
+
+      {Object.entries(pages).map(([pagenNum, isCurrent]) => (
         <button
-          onClick={() => handleClick(results.country, results.current - 1)}
+          className="num-button"
+          key={pagenNum}
+          disabled={isCurrent}
+          onClick={() => handleClick(results.country, Number(pagenNum))}
+          style={{
+            fontWeight: isCurrent ? "bold" : "normal",
+            margin: "0 0.2rem",
+          }}
         >
-          Prev
+          {pagenNum}
         </button>
-      ) : null}
-      {results.current > 1 && results.current < results.pages ? (
-        <p>1, 2, 3, 4</p>
-      ) : null}
-      {results.pages > results.current ? (
-        <button
-          onClick={() => handleClick(results.country, results.current + 1)}
-        >
-          Next
-        </button>
-      ) : null}
+      ))}
+
+      <button
+        disabled={results.current === results.pages}
+        onClick={() => handleClick(results.country, results.current + 1)}
+        style={{ margin: "0 0.2rem" }}
+      >
+        Next
+      </button>
     </span>
   );
 }
