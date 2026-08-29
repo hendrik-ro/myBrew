@@ -38,8 +38,9 @@ function Random(props: MainProps) {
   const handleClick = () => {
     if (onRandom) {
       onRandom();
+    } else {
+      console.error(new Error("Failed to fetch property 'onRandom'"));
     }
-    console.error(new Error("Failed to fetch property 'onRandom'"));
   };
 
   return (
