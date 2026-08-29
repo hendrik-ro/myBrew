@@ -4,6 +4,13 @@ DEV
 */
 
 import { useEffect, useState } from "react";
+import {
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  Outlet,
+} from "react-router-dom";
 import "./App.css";
 import Main from "./main/Main.tsx";
 import About from "./about/About.tsx";
@@ -42,23 +49,7 @@ const DEV_RESULTS = [
   },
 ] as Brewery[];
 
-function App() {
-  // Navigation
-  const [page, setPage] = useState("main");
-  const pages: string[] = ["main", "browse", "about"];
-
-  const handleNav = (page: string) => {
-    if (!pages.includes(page)) return;
-    setPage(page);
-    setBreweries({
-      pages: 0,
-      current: 0,
-      breweries: [],
-      timestamp: 0,
-      country: "",
-    } as BrewResults); // Reset breweries
-  };
-
+export default function App() {
   // Soft rate limiter
   const [now, setNow] = useState(() => Date.now());
   const [ratelimit, setRatelimit] = useState<Ratelimiter>({
@@ -170,26 +161,38 @@ function App() {
     }
   };
 
-  return (
-    <div className="container">
-      <NavBar onNav={handleNav} />
-      <div className="container">
-        {page === "main" && (
-          <Main onRandom={handleRandom} results={breweries} />
-        )}
-        {page === "browse" && (
-          <Browse
-            onCountry={handleCountry}
-            results={breweries}
-            meta={meta}
-            loading={loading}
-          />
-        )}
-        {page === "about" && <About />}
-      </div>
-      <Footer />
-    </div>
+  // Router
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route
+        path="/"
+        element={
+          <>
+            <NavBar />
+            <Outlet />
+            <Footer />
+          </>
+        }
+      >
+        <Route
+          index
+          element={<Main onRandom={handleRandom} results={breweries} />}
+        />
+        <Route
+          path="browse"
+          element={
+            <Browse
+              onCountry={handleCountry}
+              results={breweries}
+              meta={meta}
+              loading={loading}
+            />
+          }
+        />
+        <Route path="about" element={<About />} />
+      </Route>,
+    ),
   );
-}
 
-export default App;
+  return <RouterProvider router={router} />;
+}
