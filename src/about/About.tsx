@@ -40,6 +40,7 @@ export default function About() {
           . To contribute to their database, see their FAQ.
         </p>
       </div>
+
       <div className="creator">
         <p>
           Created and mantained by{" "}
@@ -50,6 +51,19 @@ export default function About() {
           >
             Hendrik Röttgers
           </a>
+        </p>
+      </div>
+      <div>
+        <p>
+          Favicon emoji provided by{" "}
+          <a
+            href="https://github.com/twitter/twemoji"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            Twemoji
+          </a>{" "}
+          under CC-BY 4.0 license.
         </p>
       </div>
     </div>

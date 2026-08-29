@@ -12,7 +12,7 @@ export default function Main(props: MainProps) {
         <img
           style={{ marginTop: "2rem" }}
           alt="beer glass"
-          src="../favicon/favicon.ico"
+          src="../favicon.ico"
         />
       </header>
       <Random results={results} onRandom={onRandom} />
