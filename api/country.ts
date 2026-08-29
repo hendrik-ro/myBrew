@@ -21,7 +21,7 @@ export default async function BrewCountry(
   let results: BrewResults = {
     pages: 0,
     current: page,
-    breweries: null,
+    breweries: [],
     timestamp: Date.now(),
     country: country,
   };
@@ -50,7 +50,7 @@ export default async function BrewCountry(
     if (response.ok) {
       const breweries = (await response.json()) as Brewery[];
       if (breweries.length === 0) {
-        results.breweries = null;
+        results.breweries = [];
       }
       results.breweries = breweries;
     }

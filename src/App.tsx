@@ -50,7 +50,13 @@ function App() {
   const handleNav = (page: string) => {
     if (!pages.includes(page)) return;
     setPage(page);
-    setBreweries(null); // Reset breweries
+    setBreweries({
+      pages: 0,
+      current: 0,
+      breweries: [],
+      timestamp: 0,
+      country: "",
+    } as BrewResults); // Reset breweries
   };
 
   // Soft rate limiter
@@ -82,8 +88,21 @@ function App() {
 
   // APIs
   const [loading, setLoading] = useState<boolean>(false);
-  const [meta, setMeta] = useState<Metadata | null>(null);
-  const [breweries, setBreweries] = useState<BrewResults | null>(null);
+  const [meta, setMeta] = useState<Metadata>({
+    total: 0,
+    by_state: {},
+    by_country: {},
+    by_type: {},
+    page: 0,
+    per_page: 0,
+  } as Metadata);
+  const [breweries, setBreweries] = useState<BrewResults>({
+    pages: 0,
+    current: 0,
+    breweries: [],
+    timestamp: 0,
+    country: "",
+  } as BrewResults);
   const [cache, setCache] = useState<
     Record<string, Record<number, BrewResults>> // searchString -> page -> breweries
   >({});
@@ -106,6 +125,7 @@ function App() {
         current: 1,
         breweries: [DEV_RESULTS[Math.floor(Math.random() * 2)]],
         timestamp: Date.now(),
+        country: "",
       });
       setLoading(false);
     } else {
@@ -116,7 +136,7 @@ function App() {
   };
 
   const handleCountry = async (searchCountry: string, page: number = 1) => {
-    if (!Object.keys(meta.by_country).includes(searchCountry)) {
+    if (meta && !Object.keys(meta.by_country).includes(searchCountry)) {
       console.info("Browse: invalid search parameter");
       return;
     }
@@ -131,6 +151,9 @@ function App() {
     if (rateLimiter()) {
       setLoading(true);
       const result = await BrewCountry(searchCountry, page);
+      if (!result) {
+        return;
+      }
       setBreweries(result);
       setCache((prev) => ({
         ...prev,
