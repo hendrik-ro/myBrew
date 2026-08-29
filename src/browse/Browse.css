@@ -29,6 +29,8 @@
   border-radius: 0.5rem;
   padding: 0.5rem;
   overflow: scroll;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
 
 .country-table th {
@@ -37,6 +39,8 @@
 
 .country-table td {
   padding: 0.2rem;
+  word-wrap: break-word;
+  width: 20%;
 }
 
 .country-table tfoot td button {
