@@ -116,6 +116,10 @@ function App() {
   };
 
   const handleCountry = async (searchCountry: string, page: number = 1) => {
+    if (!Object.keys(meta.by_country).includes(searchCountry)) {
+      console.info("Browse: invalid search parameter");
+      return;
+    }
     const cached = cache[searchCountry]?.[page];
     if (cached) {
       if (Date.now() - cached.timestamp < CACHE_TIMER) {

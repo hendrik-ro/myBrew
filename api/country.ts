@@ -1,3 +1,7 @@
+/*
+  TODO: Fetch all pages and merge into one BrewResults in the back end (see below)
+*/
+
 import type { Brewery } from "../src/types/brewery";
 import type { CountryMeta } from "../src/types/meta";
 import type { BrewResults } from "../src/types/results";
@@ -56,3 +60,43 @@ export default async function BrewCountry(
 
   return results;
 }
+
+/*
+export interface Issue {
+  id: string;
+  title: string;
+}
+
+export interface PageResponse {
+  ok: boolean;
+  status: number;
+  statusText: string;
+  json(): Promise<unknown>;
+}
+
+export type RequestFn = (url: string) => Promise<PageResponse>;
+
+export async function collectIssues(
+  startUrl: string,
+  request: RequestFn,
+): Promise<Issue[]> {
+  let result: Issue[] = [];
+  try {
+    const response = await request(startUrl);
+    if (response.ok) {
+      const page = await response.json() as {
+        items: Issue[],
+        next: string | null,
+      };
+      result.push(...page.items);
+      // recursively call request until return empty list
+      if (page.next) {
+        result.push(... await collectIssues(page.next, request));
+      }
+    }
+  } catch (error) {
+    console.error(error);
+  }
+  return result;
+}
+*/
