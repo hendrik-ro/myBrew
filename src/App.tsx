@@ -14,8 +14,8 @@ import {
 import "./App.css";
 import Main from "./main/Main.tsx";
 import About from "./about/About.tsx";
-import Footer from "./ui/footer";
-import NavBar from "./ui/navBar";
+import Footer from "./ui/Footer.tsx";
+import NavBar from "./ui/NavBar.tsx";
 import Browse from "./browse/Browse.tsx";
 import BrewMeta from "../api/metadata.ts";
 // import BrewRandom from "../api/random.ts";
@@ -106,6 +106,16 @@ export default function App() {
     fetchMetaData();
   }, []);
 
+  const resetBreweries = () => {
+    setBreweries({
+      pages: 0,
+      current: 0,
+      breweries: [],
+      timestamp: 0,
+      country: "",
+    } as BrewResults);
+  };
+
   const handleRandom = async () => {
     if (rateLimiter()) {
       setLoading(true);
@@ -168,7 +178,7 @@ export default function App() {
         path="/"
         element={
           <>
-            <NavBar />
+            <NavBar onNav={resetBreweries} />
             <Outlet />
             <Footer />
           </>

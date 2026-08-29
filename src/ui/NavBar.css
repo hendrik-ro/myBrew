@@ -1,0 +1,4 @@
+.activeNavLink {
+  font-weight: bold;
+  text-shadow: 1px 1px 1px hsl(24.706, 100%, 36.667%);
+}

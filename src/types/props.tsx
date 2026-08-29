@@ -3,7 +3,7 @@ import type { Metadata } from "./meta";
 import type { BrewResults } from "./results";
 
 export type NavBarProps = {
-  onNav: (page: string) => void;
+  onNav: () => void;
 };
 
 export type MainProps = {
