@@ -20,7 +20,7 @@ import type { Metadata } from "./types/meta.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
-const CACHE_TIMER = 900_000;
+const CACHE_TIMER = 900_000_000;
 
 const DEV_RESULTS = [
   {
@@ -81,6 +81,7 @@ function App() {
   };
 
   // APIs
+  const [loading, setLoading] = useState<boolean>(false);
   const [meta, setMeta] = useState<Metadata | null>(null);
   const [breweries, setBreweries] = useState<BrewResults | null>(null);
   const [cache, setCache] = useState<
@@ -97,6 +98,7 @@ function App() {
 
   const handleRandom = async () => {
     if (rateLimiter()) {
+      setLoading(true);
       // const result = await BrewRandom();
       // setBreweries([result])
       setBreweries({
@@ -105,6 +107,7 @@ function App() {
         breweries: [DEV_RESULTS[Math.floor(Math.random() * 2)]],
         timestamp: Date.now(),
       });
+      setLoading(false);
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
@@ -113,6 +116,10 @@ function App() {
   };
 
   const handleCountry = async (searchCountry: string, page: number = 1) => {
+    if (!Object.keys(meta.by_country).includes(searchCountry)) {
+      console.info("Browse: invalid search parameter");
+      return;
+    }
     const cached = cache[searchCountry]?.[page];
     if (cached) {
       if (Date.now() - cached.timestamp < CACHE_TIMER) {
@@ -122,6 +129,7 @@ function App() {
       }
     }
     if (rateLimiter()) {
+      setLoading(true);
       const result = await BrewCountry(searchCountry, page);
       setBreweries(result);
       setCache((prev) => ({
@@ -131,6 +139,7 @@ function App() {
           [page]: result,
         },
       }));
+      setLoading(false);
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
@@ -146,7 +155,12 @@ function App() {
           <Main onRandom={handleRandom} results={breweries} />
         )}
         {page === "browse" && (
-          <Browse onCountry={handleCountry} results={breweries} meta={meta} />
+          <Browse
+            onCountry={handleCountry}
+            results={breweries}
+            meta={meta}
+            loading={loading}
+          />
         )}
         {page === "about" && <About />}
       </div>
