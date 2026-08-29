@@ -11,6 +11,8 @@ header {
 }
 
 .random {
+  display: flex;
+  flex-direction: column;
   flex: 10 1;
   width: 100%;
   align-items: center;
@@ -22,8 +24,8 @@ section {
 }
 
 .brew-random {
-  width: 100%;
+  width: 40%;
   border: 1px solid hsl(24.706, 100%, 36.667%);
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 }

@@ -1,25 +1,15 @@
-import type { NavBarProps } from "../types/props";
-
-export default function NavBar(props: NavBarProps) {
-  const onNav = props.onNav;
-
+export default function NavBar() {
   return (
     <nav>
       <ul>
         <li>
-          <button className="navButton" onClick={() => onNav("main")}>
-            My Brew
-          </button>
+          <a href="/">My Brew</a>
         </li>
         <li>
-          <button className="navButton" onClick={() => onNav("browse")}>
-            Browse
-          </button>
+          <a href="/browse">Browse</a>
         </li>
         <li>
-          <button className="navButton" onClick={() => onNav("about")}>
-            About
-          </button>
+          <a href="/about">About</a>
         </li>
       </ul>
     </nav>
