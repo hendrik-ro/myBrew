@@ -106,6 +106,16 @@ export default function App() {
     fetchMetaData();
   }, []);
 
+  const resetBreweries = () => {
+    setBreweries({
+      pages: 0,
+      current: 0,
+      breweries: [],
+      timestamp: 0,
+      country: "",
+    } as BrewResults);
+  };
+
   const handleRandom = async () => {
     if (rateLimiter()) {
       setLoading(true);
@@ -168,7 +178,7 @@ export default function App() {
         path="/"
         element={
           <>
-            <NavBar />
+            <NavBar onNav={resetBreweries} />
             <Outlet />
             <Footer />
           </>
