@@ -65,7 +65,7 @@ export const fetchBreweriesRandom = createAsyncThunk(
 
 export const fetchBreweriesByCountry = createAsyncThunk(
   "breweries/fetchRandom",
-  async (query: Args): Promise<BrewResults> => {
+  async (query: Args): Promise<BrewResults | null> => {
     const response = await BrewCountry(
       query.country,
       query.page,
