@@ -1,4 +1,4 @@
-import type { BrowseProps } from "../types/props";
+import type { BrowseProps } from "../../types/props";
 import "./Browse.css";
 import BrowseCountry from "./Country";
 

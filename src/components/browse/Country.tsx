@@ -1,4 +1,4 @@
-import type { BrewFormProps, BrowseProps } from "../types/props";
+import type { BrewFormProps, BrowseProps } from "../../types/props";
 import "./Country.css";
 
 export default function BrowseCountry(props: BrowseProps) {
