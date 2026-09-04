@@ -1,4 +1,4 @@
-import type { MainProps } from "../types/props";
+import type { MainProps } from "../../types/props";
 import "./Main.css";
 
 export default function Main(props: MainProps) {

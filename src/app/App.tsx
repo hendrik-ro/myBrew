@@ -12,18 +12,18 @@ import {
   Outlet,
 } from "react-router-dom";
 import "./App.css";
-import Main from "./main/Main.tsx";
-import About from "./about/About.tsx";
-import Footer from "./ui/Footer.tsx";
-import NavBar from "./ui/NavBar.tsx";
-import Browse from "./browse/Browse.tsx";
-import BrewMeta from "../api/metadata.ts";
+import Main from "../components/main/Main.tsx";
+import About from "../components/about/About.tsx";
+import Footer from "../ui/Footer.tsx";
+import NavBar from "../ui/NavBar.tsx";
+import Browse from "../components/browse/Browse.tsx";
+import BrewMeta from "../../api/metadata.ts";
 // import BrewRandom from "../api/random.ts";
-import BrewCountry from "../api/country.ts";
-import type { Brewery } from "./types/brewery";
-import type { Ratelimiter } from "./types/ratelimiter.tsx";
-import type { BrewResults } from "./types/results.tsx";
-import type { Metadata } from "./types/meta.tsx";
+import BrewCountry from "../../api/country.ts";
+import type { Brewery } from "../types/brewery.tsx";
+import type { Ratelimiter } from "../types/ratelimiter.tsx";
+import type { BrewResults } from "../types/results.tsx";
+import type { Metadata } from "../types/meta.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
