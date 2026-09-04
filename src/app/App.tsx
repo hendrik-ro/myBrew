@@ -11,19 +11,23 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+// CSS
 import "./App.css";
+// Components
 import Main from "../components/main/Main.tsx";
 import About from "../components/about/About.tsx";
 import Footer from "../ui/Footer.tsx";
 import NavBar from "../ui/NavBar.tsx";
 import Browse from "../components/browse/Browse.tsx";
-import BrewMeta from "../../api/metadata.ts";
 // import BrewRandom from "../api/random.ts";
 import BrewCountry from "../../api/country.ts";
+// Types
 import type { Brewery } from "../types/brewery.tsx";
 import type { Ratelimiter } from "../types/ratelimiter.tsx";
 import type { BrewResults } from "../types/results.tsx";
-import type { Metadata } from "../types/meta.tsx";
+import { fetchMetaData, selectBreweries } from "../features/breweriesSlice.tsx";
+import { useAppDispatch } from "./store.tsx";
+import { useSelector } from "react-redux";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
@@ -79,14 +83,7 @@ export default function App() {
 
   // APIs
   const [loading, setLoading] = useState<boolean>(false);
-  const [meta, setMeta] = useState<Metadata>({
-    total: 0,
-    by_state: {},
-    by_country: {},
-    by_type: {},
-    page: 0,
-    per_page: 0,
-  } as Metadata);
+  const breweriesState = useSelector(selectBreweries);
   const [breweries, setBreweries] = useState<BrewResults>({
     pages: 0,
     current: 0,
@@ -98,12 +95,10 @@ export default function App() {
     Record<string, Record<number, BrewResults>> // searchString -> page -> breweries
   >({});
 
+  const dispatch = useAppDispatch();
+
   useEffect(() => {
-    const fetchMetaData = async () => {
-      const metadata = (await BrewMeta()) as Metadata;
-      setMeta(metadata);
-    };
-    fetchMetaData();
+    dispatch(fetchMetaData());
   }, []);
 
   const resetBreweries = () => {
@@ -137,7 +132,10 @@ export default function App() {
   };
 
   const handleCountry = async (searchCountry: string, page: number = 1) => {
-    if (meta && !Object.keys(meta.by_country).includes(searchCountry)) {
+    if (
+      breweriesState.meta &&
+      !Object.keys(breweriesState.meta.by_country).includes(searchCountry)
+    ) {
       console.info("Browse: invalid search parameter");
       return;
     }
@@ -194,7 +192,7 @@ export default function App() {
             <Browse
               onCountry={handleCountry}
               results={breweries}
-              meta={meta}
+              meta={breweriesState.meta}
               loading={loading}
             />
           }
