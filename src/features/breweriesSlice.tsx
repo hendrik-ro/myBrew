@@ -103,7 +103,15 @@ export const breweriesSlice = createSlice({
       })
       .addCase(fetchMetaData.fulfilled, (state, action) => {
         state.loading = "succeeded";
-        state.meta = { ...action.payload };
+        state.meta = {
+          ...action.payload,
+          total: action.payload.total ?? 0,
+          by_state: action.payload.by_state ?? {},
+          by_country: action.payload.by_country ?? {},
+          by_type: action.payload.by_type ?? {},
+          page: action.payload.page ?? 0,
+          per_page: action.payload.per_page ?? 0,
+        };
       })
 
       // For fetchBreweriesByCountry
@@ -140,7 +148,9 @@ export const breweriesSlice = createSlice({
       })
       .addCase(fetchBreweriesRandom.fulfilled, (state, action) => {
         state.loading = "succeeded";
-        state.random = action.payload;
+        if (action.payload) {
+          state.random = action.payload;
+        }
       });
   },
 });
