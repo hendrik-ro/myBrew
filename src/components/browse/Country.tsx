@@ -1,4 +1,4 @@
-import type { BrewFormProps, BrowseProps } from "../types/props";
+import type { BrewFormProps, BrowseProps } from "../../types/props";
 import "./Country.css";
 
 export default function BrowseCountry(props: BrowseProps) {
@@ -20,7 +20,7 @@ export default function BrowseCountry(props: BrowseProps) {
       ) : (
         <p>Error: API failed to fetch meta data</p>
       )}
-      {results.breweries.length > 0 && !loading ? (
+      {results.breweries.length > 0 && loading === "succeeded" ? (
         <BrewTable
           onCountry={onCountry}
           results={results}
@@ -28,7 +28,7 @@ export default function BrowseCountry(props: BrowseProps) {
           loading={loading}
         />
       ) : (
-        loading && <p>Loading breweries...</p>
+        loading === "pending" && loading && <p>Loading breweries...</p>
       )}
     </div>
   );

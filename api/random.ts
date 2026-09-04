@@ -8,7 +8,6 @@ export default async function BrewRandom(): Promise<Brewery | null> {
     const response = await fetch(url);
     if (response.ok) {
       const brewery = await response.json();
-      console.log(brewery);
       return brewery[0] as Brewery;
     }
   } catch (error) {
