@@ -3,10 +3,13 @@ import type { Brewery } from "../types/brewery";
 import type { Metadata } from "../types/meta";
 import BrewMeta from "../../api/metadata";
 import type { RootState } from "../app/store";
+import BrewCountry from "../../api/country";
+import type { BrewResults } from "../types/results";
+import BrewRandom from "../../api/random";
 
 interface BreweriesState {
   meta: Metadata;
-  breweries: Brewery[];
+  breweries: BrewResults;
   random: Brewery | null;
   loading: "idle" | "pending" | "succeeded" | "failed";
 }
@@ -20,7 +23,13 @@ const initialState: BreweriesState = {
     page: 0,
     per_page: 0,
   },
-  breweries: [],
+  breweries: {
+    pages: 0,
+    current: 0,
+    breweries: [],
+    timestamp: 0,
+    country: "",
+  },
   random: null,
   loading: "idle",
 };
@@ -33,26 +42,90 @@ export const fetchMetaData = createAsyncThunk(
   },
 );
 
+interface Args {
+  country: string;
+  page?: number;
+  perPage?: number;
+}
+
+export const fetchBreweriesRandom = createAsyncThunk(
+  "breweries/fetchByCountry",
+  async () => {
+    const response = await BrewRandom();
+    return response;
+  },
+);
+
+export const fetchBreweriesByCountry = createAsyncThunk(
+  "breweries/fetchRandom",
+  async (query: Args) => {
+    const response = await BrewCountry(
+      query.country,
+      query.page,
+      query.perPage,
+    );
+    return response;
+  },
+);
+
 export const breweriesSlice = createSlice({
   name: "breweriesSlice",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    resetBreweries: (state) => {
+      state.breweries = {
+        pages: 0,
+        current: 0,
+        breweries: [],
+        timestamp: 0,
+        country: "",
+      };
+    },
+    useCache: (state, action) => {
+      state.breweries = action.payload;
+    },
+  },
   extraReducers: (builder) => {
-    builder.addAsyncThunk(fetchMetaData, {
-      pending: (state) => {
+    builder
+      // For fetchMetaData
+      .addCase(fetchMetaData.pending, (state) => {
         state.loading = "pending";
-      },
-      rejected: (state) => {
+      })
+      .addCase(fetchMetaData.rejected, (state) => {
         state.loading = "failed";
-      },
-      fulfilled: (state, action) => {
+      })
+      .addCase(fetchMetaData.fulfilled, (state, action) => {
         state.loading = "succeeded";
         state.meta = { ...action.payload };
-      },
-    });
+      })
+
+      // For fetchBreweriesByCountry
+      .addCase(fetchBreweriesByCountry.pending, (state) => {
+        state.loading = "pending";
+      })
+      .addCase(fetchBreweriesByCountry.rejected, (state) => {
+        state.loading = "failed";
+      })
+      .addCase(fetchBreweriesByCountry.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.breweries = { ...action.payload };
+      })
+
+      // For fetchBreweriesRandom (if you have it)
+      .addCase(fetchBreweriesRandom.pending, (state) => {
+        state.loading = "pending";
+      })
+      .addCase(fetchBreweriesRandom.rejected, (state) => {
+        state.loading = "failed";
+      })
+      .addCase(fetchBreweriesRandom.fulfilled, (state, action) => {
+        state.loading = "succeeded";
+        state.random = action.payload;
+      });
   },
 });
 
 export const selectBreweries = (state: RootState) =>
   state.breweriesSliceReducer;
+export const { resetBreweries, useCache } = breweriesSlice.actions;
 export default breweriesSlice.reducer;

@@ -15,7 +15,7 @@ export type BrowseProps = {
   results: BrewResults;
   onCountry: (arg0: string, arg1?: number) => void;
   meta: Metadata;
-  loading: boolean;
+  loading: string;
 };
 
 export type BrewFormProps = {

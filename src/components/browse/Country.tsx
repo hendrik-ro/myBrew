@@ -20,7 +20,7 @@ export default function BrowseCountry(props: BrowseProps) {
       ) : (
         <p>Error: API failed to fetch meta data</p>
       )}
-      {results.breweries.length > 0 && !loading ? (
+      {results.breweries.length > 0 && loading === "succeeded" ? (
         <BrewTable
           onCountry={onCountry}
           results={results}

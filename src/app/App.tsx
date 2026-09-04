@@ -11,6 +11,7 @@ import {
   Route,
   Outlet,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 // CSS
 import "./App.css";
 // Components
@@ -19,39 +20,23 @@ import About from "../components/about/About.tsx";
 import Footer from "../ui/Footer.tsx";
 import NavBar from "../ui/NavBar.tsx";
 import Browse from "../components/browse/Browse.tsx";
-// import BrewRandom from "../api/random.ts";
-import BrewCountry from "../../api/country.ts";
 // Types
-import type { Brewery } from "../types/brewery.tsx";
 import type { Ratelimiter } from "../types/ratelimiter.tsx";
 import type { BrewResults } from "../types/results.tsx";
-import { fetchMetaData, selectBreweries } from "../features/breweriesSlice.tsx";
+// Store
 import { useAppDispatch } from "./store.tsx";
-import { useSelector } from "react-redux";
+import {
+  fetchBreweriesByCountry,
+  fetchBreweriesRandom,
+  fetchMetaData,
+  resetBreweries,
+  selectBreweries,
+  useCache,
+} from "../features/breweriesSlice.tsx";
 
 const MAX_REQS = 7;
 const TIME_FRAME = 60_000;
 const CACHE_TIMER = 900_000_000;
-
-const DEV_RESULTS = [
-  {
-    name: "Test Brewery",
-    brewery_type: "micro",
-    address_1: "Some street 23",
-    city: "City of God",
-    country: "Beerhalla",
-    postal_code: "666",
-    website_url: "none",
-  },
-  {
-    name: "Another Brewery",
-    brewery_type: "nano",
-    address_1: "Other street 42",
-    city: "City of Beer",
-    country: "Beerhalla",
-    postal_code: "333",
-  },
-] as Brewery[];
 
 export default function App() {
   // Soft rate limiter
@@ -82,15 +67,7 @@ export default function App() {
   };
 
   // APIs
-  const [loading, setLoading] = useState<boolean>(false);
   const breweriesState = useSelector(selectBreweries);
-  const [breweries, setBreweries] = useState<BrewResults>({
-    pages: 0,
-    current: 0,
-    breweries: [],
-    timestamp: 0,
-    country: "",
-  } as BrewResults);
   const [cache, setCache] = useState<
     Record<string, Record<number, BrewResults>> // searchString -> page -> breweries
   >({});
@@ -101,29 +78,9 @@ export default function App() {
     dispatch(fetchMetaData());
   }, []);
 
-  const resetBreweries = () => {
-    setBreweries({
-      pages: 0,
-      current: 0,
-      breweries: [],
-      timestamp: 0,
-      country: "",
-    } as BrewResults);
-  };
-
   const handleRandom = async () => {
     if (rateLimiter()) {
-      setLoading(true);
-      // const result = await BrewRandom();
-      // setBreweries([result])
-      setBreweries({
-        pages: 1,
-        current: 1,
-        breweries: [DEV_RESULTS[Math.floor(Math.random() * 2)]],
-        timestamp: Date.now(),
-        country: "",
-      });
-      setLoading(false);
+      dispatch(fetchBreweriesRandom());
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
@@ -142,26 +99,20 @@ export default function App() {
     const cached = cache[searchCountry]?.[page];
     if (cached) {
       if (Date.now() - cached.timestamp < CACHE_TIMER) {
-        setBreweries(cached);
+        dispatch(useCache(cached));
         console.info("Cache: loaded data");
         return;
       }
     }
     if (rateLimiter()) {
-      setLoading(true);
-      const result = await BrewCountry(searchCountry, page);
-      if (!result) {
-        return;
-      }
-      setBreweries(result);
+      dispatch(fetchBreweriesByCountry({ country: searchCountry, page: page }));
       setCache((prev) => ({
         ...prev,
         [searchCountry]: {
           ...prev[searchCountry],
-          [page]: result,
+          [page]: breweriesState.breweries,
         },
       }));
-      setLoading(false);
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,
@@ -184,16 +135,18 @@ export default function App() {
       >
         <Route
           index
-          element={<Main onRandom={handleRandom} results={breweries} />}
+          element={
+            <Main onRandom={handleRandom} results={breweriesState.breweries} />
+          }
         />
         <Route
           path="browse"
           element={
             <Browse
               onCountry={handleCountry}
-              results={breweries}
+              results={breweriesState.breweries}
               meta={breweriesState.meta}
-              loading={loading}
+              loading={breweriesState.loading}
             />
           }
         />
