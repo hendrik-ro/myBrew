@@ -6,9 +6,11 @@ import BrewCountry from "../../api/country";
 import type { BrewResults } from "../types/results";
 import BrewRandom from "../../api/random";
 import type { Brewery } from "../types/brewery";
+import type { BrewCache } from "../types/cache";
 
 interface BreweriesState {
   meta: Metadata;
+  cache: BrewCache;
   breweries: BrewResults;
   random: Brewery | null;
   loading: "idle" | "pending" | "succeeded" | "failed";
@@ -23,6 +25,7 @@ const initialState: BreweriesState = {
     page: 0,
     per_page: 0,
   },
+  cache: {},
   breweries: {
     pages: 0,
     current: 0,
@@ -109,6 +112,16 @@ export const breweriesSlice = createSlice({
       .addCase(fetchBreweriesByCountry.fulfilled, (state, action) => {
         state.loading = "succeeded";
         state.breweries = { ...action.payload };
+
+        // Update cache
+        const { country, current } = action.payload;
+        state.cache = {
+          ...state.cache,
+          [country]: {
+            ...state.cache[country],
+            [current]: action.payload,
+          },
+        };
       })
 
       // For fetchBreweriesRandom (if you have it)

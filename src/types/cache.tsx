@@ -3,6 +3,4 @@
 */
 import type { BrewResults } from "./results";
 
-export type BrewCache = {
-  country: Record<string, BrewResults>;
-};
+export type BrewCache = Record<string, Record<number, BrewResults>>;

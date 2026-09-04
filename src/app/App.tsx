@@ -22,7 +22,6 @@ import NavBar from "../ui/NavBar.tsx";
 import Browse from "../components/browse/Browse.tsx";
 // Types
 import type { Ratelimiter } from "../types/ratelimiter.tsx";
-import type { BrewResults } from "../types/results.tsx";
 // Store
 import { useAppDispatch } from "./store.tsx";
 import {
@@ -68,9 +67,6 @@ export default function App() {
 
   // APIs
   const breweriesState = useSelector(selectBreweries);
-  const [cache, setCache] = useState<
-    Record<string, Record<number, BrewResults>> // searchString -> page -> breweries
-  >({});
 
   const dispatch = useAppDispatch();
 
@@ -89,6 +85,9 @@ export default function App() {
   };
 
   const handleCountry = async (searchCountry: string, page: number = 1) => {
+    searchCountry = searchCountry.trim();
+    page = page ?? 1;
+
     if (
       breweriesState.meta &&
       !Object.keys(breweriesState.meta.by_country).includes(searchCountry)
@@ -96,23 +95,18 @@ export default function App() {
       console.info("Browse: invalid search parameter");
       return;
     }
-    const cached = cache[searchCountry]?.[page];
+
+    const cached = breweriesState.cache[searchCountry]?.[page];
+
     if (cached) {
       if (Date.now() - cached.timestamp < CACHE_TIMER) {
         dispatch(useCache(cached));
-        console.info("Cache: loaded data");
+        console.info("Cache: loaded data for " + searchCountry + ", " + page);
         return;
       }
     }
     if (rateLimiter()) {
       dispatch(fetchBreweriesByCountry({ country: searchCountry, page: page }));
-      setCache((prev) => ({
-        ...prev,
-        [searchCountry]: {
-          ...prev[searchCountry],
-          [page]: breweriesState.breweries,
-        },
-      }));
     } else {
       alert(
         `You exceeded the max requests of ${MAX_REQS} with ${TIME_FRAME / 1000} seconds.`,

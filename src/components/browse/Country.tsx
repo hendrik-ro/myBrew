@@ -28,7 +28,7 @@ export default function BrowseCountry(props: BrowseProps) {
           loading={loading}
         />
       ) : (
-        loading && <p>Loading breweries...</p>
+        loading === "pending" && loading && <p>Loading breweries...</p>
       )}
     </div>
   );
