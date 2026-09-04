@@ -45,6 +45,9 @@ export const fetchMetaData = createAsyncThunk(
   "breweries/fetchMetaData",
   async () => {
     const response = await BrewMeta();
+    if (!response) {
+      throw new Error("Failed to fetch metadata");
+    }
     return response;
   },
 );
@@ -123,19 +126,23 @@ export const breweriesSlice = createSlice({
       })
       .addCase(
         fetchBreweriesByCountry.fulfilled,
-        (state, action: PayloadAction<BrewResults>) => {
-          state.loading = "succeeded";
-          state.breweries = { ...action.payload };
+        (state, action: PayloadAction<BrewResults | null>) => {
+          if (action.payload === null) {
+            state.loading = "failed";
+          } else {
+            state.loading = "succeeded";
+            state.breweries = { ...action.payload };
 
-          // Update cache
-          const { country, current } = action.payload;
-          state.cache = {
-            ...state.cache,
-            [country]: {
-              ...state.cache[country],
-              [current]: action.payload,
-            },
-          };
+            // Update cache
+            const { country, current } = action.payload;
+            state.cache = {
+              ...state.cache,
+              [country]: {
+                ...state.cache[country],
+                [current]: action.payload,
+              },
+            };
+          }
         },
       )
 
