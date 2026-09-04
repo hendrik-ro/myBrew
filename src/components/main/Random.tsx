@@ -18,26 +18,24 @@ export default function Random(props: MainProps) {
       <button id="brewButton" onClick={handleClick}>
         Random Brewery
       </button>
-      {results && results.breweries.length > 0 ? (
+      {results && results.name ? (
         <div className="brew-random" style={{ marginTop: "1rem" }}>
-          <p>{results.breweries[0].name}</p>
-          <p>Type: {results.breweries[0].brewery_type}</p>
-          {results.breweries[0].address_1 && (
-            <p>{results.breweries[0].address_1}</p>
-          )}
-          {results.breweries[0].postal_code && (
+          <p>{results.name}</p>
+          <p>Type: {results.brewery_type}</p>
+          {results.address_1 && <p>{results.address_1}</p>}
+          {results.postal_code && (
             <p>
-              {results.breweries[0].postal_code} {results.breweries[0].city}
+              {results.postal_code} {results.city}
             </p>
           )}
-          <p>{results.breweries[0].country}</p>
-          {results.breweries[0].website_url && (
+          <p>{results.country}</p>
+          {results.website_url && (
             <a
-              href={results.breweries[0].website_url}
+              href={results.website_url}
               target="_blank"
               rel="noopener noreferrer"
             >
-              {results.breweries[0].website_url}
+              {results.website_url}
             </a>
           )}
         </div>

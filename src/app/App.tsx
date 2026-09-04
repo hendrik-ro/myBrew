@@ -136,7 +136,7 @@ export default function App() {
         <Route
           index
           element={
-            <Main onRandom={handleRandom} results={breweriesState.breweries} />
+            <Main onRandom={handleRandom} results={breweriesState.random} />
           }
         />
         <Route

@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import type { Brewery } from "../types/brewery";
 import type { Metadata } from "../types/meta";
 import BrewMeta from "../../api/metadata";
 import type { RootState } from "../app/store";
 import BrewCountry from "../../api/country";
 import type { BrewResults } from "../types/results";
 import BrewRandom from "../../api/random";
+import type { Brewery } from "../types/brewery";
 
 interface BreweriesState {
   meta: Metadata;
