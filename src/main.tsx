@@ -5,7 +5,7 @@ import App from "./app/App.tsx";
 import { store } from "./app/store.tsx";
 import { Provider } from "react-redux";
 
-const AppWrapper = () => {
+export const AppWrapper = () => {
   const AppStore = store;
   return (
     <Provider store={AppStore}>

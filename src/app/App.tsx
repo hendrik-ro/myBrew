@@ -30,7 +30,7 @@ import {
   fetchMetaData,
   resetBreweries,
   selectBreweries,
-  useCache,
+  loadCache,
 } from "../features/breweriesSlice.tsx";
 
 const MAX_REQS = 7;
@@ -72,7 +72,7 @@ export default function App() {
 
   useEffect(() => {
     dispatch(fetchMetaData());
-  }, []);
+  }, [dispatch]);
 
   const handleRandom = async () => {
     if (rateLimiter()) {
@@ -100,7 +100,7 @@ export default function App() {
 
     if (cached) {
       if (Date.now() - cached.timestamp < CACHE_TIMER) {
-        dispatch(useCache(cached));
+        dispatch(loadCache(cached));
         console.info("Cache: loaded data for " + searchCountry + ", " + page);
         return;
       }

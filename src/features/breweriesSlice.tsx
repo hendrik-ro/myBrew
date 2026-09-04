@@ -84,7 +84,7 @@ export const breweriesSlice = createSlice({
         country: "",
       };
     },
-    useCache: (state, action) => {
+    loadCache: (state, action) => {
       state.breweries = action.payload;
     },
   },
@@ -140,5 +140,6 @@ export const breweriesSlice = createSlice({
 
 export const selectBreweries = (state: RootState) =>
   state.breweriesSliceReducer;
-export const { resetBreweries, useCache } = breweriesSlice.actions;
-export default breweriesSlice.reducer;
+export const { resetBreweries, loadCache } = breweriesSlice.actions;
+export const breweriesState = breweriesSlice.reducer;
+export default breweriesState;
