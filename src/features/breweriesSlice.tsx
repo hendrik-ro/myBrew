@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSlice,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import type { Metadata } from "../types/meta";
 import BrewMeta from "../../api/metadata";
 import type { RootState } from "../app/store";
@@ -61,7 +65,7 @@ export const fetchBreweriesRandom = createAsyncThunk(
 
 export const fetchBreweriesByCountry = createAsyncThunk(
   "breweries/fetchRandom",
-  async (query: Args) => {
+  async (query: Args): Promise<BrewResults> => {
     const response = await BrewCountry(
       query.country,
       query.page,
@@ -109,20 +113,23 @@ export const breweriesSlice = createSlice({
       .addCase(fetchBreweriesByCountry.rejected, (state) => {
         state.loading = "failed";
       })
-      .addCase(fetchBreweriesByCountry.fulfilled, (state, action) => {
-        state.loading = "succeeded";
-        state.breweries = { ...action.payload };
+      .addCase(
+        fetchBreweriesByCountry.fulfilled,
+        (state, action: PayloadAction<BrewResults>) => {
+          state.loading = "succeeded";
+          state.breweries = { ...action.payload };
 
-        // Update cache
-        const { country, current } = action.payload;
-        state.cache = {
-          ...state.cache,
-          [country]: {
-            ...state.cache[country],
-            [current]: action.payload,
-          },
-        };
-      })
+          // Update cache
+          const { country, current } = action.payload;
+          state.cache = {
+            ...state.cache,
+            [country]: {
+              ...state.cache[country],
+              [current]: action.payload,
+            },
+          };
+        },
+      )
 
       // For fetchBreweriesRandom (if you have it)
       .addCase(fetchBreweriesRandom.pending, (state) => {

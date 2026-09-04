@@ -8,7 +8,7 @@ export type NavBarProps = {
 };
 
 export type MainProps = {
-  results: Brewery;
+  results: Brewery | null;
   onRandom: () => void;
 };
 
