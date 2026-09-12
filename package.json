@@ -9,14 +9,16 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "format:check": "prettier --check src/ && prettier --check api/",
-    "format:write": "prettier --write src/ && prettier --write api/"
+    "format": "prettier --write src/ && prettier --write api/"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.12.0",
     "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "react-dom": "^19.2.8",
+    "react-redux": "^9.3.0",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
-    "@reduxjs/toolkit": "^2.12.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.17",
@@ -25,8 +27,6 @@
     "mocha": "^11.8.0",
     "oxlint": "^1.75.0",
     "prettier": "^3.9.6",
-    "react-redux": "^9.3.0",
-    "react-router-dom": "^7.18.3",
     "ts-node": "^10.9.2",
     "typescript": "~6.0.3",
     "vite": "^8.2.0"
