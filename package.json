@@ -9,7 +9,7 @@
     "lint": "oxlint",
     "preview": "vite preview",
     "format:check": "prettier --check src/ && prettier --check api/",
-    "format:write": "prettier --write src/ && prettier --write api/"
+    "format": "prettier --write src/ && prettier --write api/"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.12.0",
